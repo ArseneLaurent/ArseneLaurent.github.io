@@ -2,7 +2,7 @@
 title: "Arsene Laurent"
 about:
   id: hero-heading
-  template: trestles
+  template: jolla
   image: campusPhotos-43.jpg
   links:
     - text: LinkedIn
