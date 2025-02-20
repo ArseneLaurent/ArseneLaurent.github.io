@@ -9,6 +9,8 @@ about:
       href: https://www.linkedin.com/in/arsene-laurent-44595b27b/
     - text: Github
       href: https://github.com/ST47S-FODS-Spring2025
+    - text: Code for this Website
+      href: https://github.com/ArseneLaurent/ArseneLaurent.github.io
 ---
 
 :::{#hero-heading}

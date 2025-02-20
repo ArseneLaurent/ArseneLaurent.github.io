@@ -11,7 +11,7 @@
     "href": "ChocolateRatings.html",
     "title": "Chocolate Ratings Analysis",
     "section": "",
-    "text": "This data comes from the 2022-01-18 folder of the TidyTuesday GitHub repository. After selecting the relevant variables and creating a graph with rating as our y-axis and Country on the x-axis, we can see that companies based in Chile had the highest average rating for their chocolate bars. Unfortunately, this data is highly skewed by the fact that there were only two Chilean companies who had their chocolate bars rated. Below is a graph plotting all of the data, showing which country’s companies had the highest rated chocolate bars.\n\n\n\n\n\n\n\n\n\nUnfortunately, this plot doesn’t offer us much more information on which country produces the “best” chocolate, though we can observe that the highest rated chocolate is pretty consistently within the 60-80\\(%\\) range of cocoa concentration.\nHere is a link to the original data by Brady Brelinski: https://flavorsofcacao.com/chocolate_database.html"
+    "text": "This data comes from the 2022-01-18 folder of the TidyTuesday GitHub repository. After selecting the relevant variables and creating a graph with average rating as our y-axis and Country on the x-axis, we can see that companies based in Chile had the highest average rating for their chocolate bars. Unfortunately, this data is highly skewed by the fact that there were only two Chilean companies who had their chocolate bars rated. Below is a graph plotting all of the data, showing which country’s companies had the highest rated chocolate bars.\n\n\n\n\n\n\n\n\n\nUnfortunately, this plot doesn’t offer us much more information on which country produces the “best” chocolate, though we can observe that the highest rated chocolate is pretty consistently within the 60-80\\(%\\) range of cocoa concentration.\nHere is a link to the original data by Brady Brelinski: https://flavorsofcacao.com/chocolate_database.html"
   },
   {
     "objectID": "about.html",
@@ -25,6 +25,6 @@
     "href": "index.html",
     "title": "Arsene Laurent",
     "section": "",
-    "text": "Arsene is a student at Pomona College hoping to attain a double major in Computer Science and Geology as well as a minor in Data Science. In his free time, he plays video games, does origami, and competes as part of the Claremont Men’s Volleyball Club.\n \n  \n   \n  \n     LinkedIn\n  \n  \n     Github"
+    "text": "Arsene is a student at Pomona College hoping to attain a double major in Computer Science and Geology as well as a minor in Data Science. In his free time, he plays video games, does origami, and competes as part of the Claremont Men’s Volleyball Club.\n \n  \n   \n  \n     LinkedIn\n  \n  \n     Github\n  \n  \n     Code for this Website"
   }
 ]
