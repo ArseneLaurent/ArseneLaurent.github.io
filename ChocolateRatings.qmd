@@ -66,9 +66,9 @@ ggplot(by_percent, (aes(x = cocoa_percent, y = rating))) +
     legend.text = element_text(size = 6),
     legend.key.size = unit(0.5, "cm"),
     plot.margin = margin(1, 1, 2, 1, "cm"),
-    legend.position = "right")
+    legend.position = "right", plot.title = element_text(vjust = 4))
 ```
 Unfortunately, this plot doesn't offer us much more information on which country produces the "best" chocolate, though we can observe that the highest rated chocolate is pretty consistently within the 60-80$%$ range of cocoa concentration.
 
 
-Here is a link to the original data by Brady Brelinski: https://flavorsofcacao.com/chocolate_database.html
+Here is a link to the original data by Brady Brelinski: https://flavorsofcacao.com/chocolate_database.html  
