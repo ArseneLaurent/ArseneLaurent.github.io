@@ -14,8 +14,8 @@ website:
         menu: 
          - text: "London Marathon"
            href: LondonMarathon.html
-         - text: "Campus Pride Index"
-           href: pride.html
+         - text: "Chocolate Ratings"
+           href: ChocolateRatings.html
 
 format:
   html:

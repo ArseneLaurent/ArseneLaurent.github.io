@@ -11,10 +11,8 @@ about:
       href: https://github.com/ST47S-FODS-Spring2025
 ---
 
-This is a Quarto website.
+:::{#hero-heading}
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Arsene is a student at Pomona College hoping to attain a double major in Computer Science and Geology as well as a minor in Data Science. In his free time, he plays video games, does origami, and competes as part of the Claremont Men's Volleyball Club.
 
-```{r}
-1 + 1
-```
+:::

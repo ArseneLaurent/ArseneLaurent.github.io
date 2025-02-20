@@ -28,7 +28,7 @@ library(ggthemes)
 ggplot(winners, aes(x = Year, y = Time, color = Nationality)) +
   geom_point() +
   facet_wrap(~Category) +
-  labs(x = "Year", y = "Time") +
+  labs(x = "Year", y = "Time", title = "Winning Times by Year") +
   theme_solarized(light = FALSE)
 ```
 
