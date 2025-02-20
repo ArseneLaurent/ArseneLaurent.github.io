@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Arsene Laurent",
+    "objectID": "LondonMarathon.html",
+    "href": "LondonMarathon.html",
+    "title": "London Marathon Analysis",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "This data comes from the 2023-04-25 folder of the TidyTuesday GitHub repository. After selecting the relevant variables and plotting, distinguishing athlete nationality by color and separating into 4 different graphs based on category. From these plots, we can notice that while winning times have decreased slightly for the Men and Women categories over the past 4 decades, times for the Wheelchair Women and Wheelchair Men categories have dramatically improved in the same amount of time.\nWe can also see that men generally have shorter times than women in either category, and that the winners for the past decade or so have consistently been from the same countries in each category, meaning that each category has a couple of countries that consistently dominate.\nHere is a link to the original data repository by nrennie on GitHub: https://github.com/nrennie/LondonMarathon"
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,12 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Arsene Laurent",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
   }
 ]

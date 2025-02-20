@@ -3,16 +3,23 @@ project:
   output-dir: docs
 
 website:
+  site-url: https://arsenelaurent.github.io/
   title: "ArseneLaurent"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+    right: 
+      - text: "Data Viz"
+        menu: 
+         - text: "London Marathon"
+           href: LondonMarathon.html
+         - text: "Campus Pride Index"
+           href: pride.html
 
 format:
   html:
-    theme: cosmo
+    theme: solar
     css: styles.css
     toc: true
 

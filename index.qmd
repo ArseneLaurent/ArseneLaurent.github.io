@@ -3,7 +3,7 @@ title: "Arsene Laurent"
 about:
   id: hero-heading
   template: trestles
-  image: C:\Users/AMLaurent/Documents/campusPhotos-43.jpg
+  image: campusPhotos-43.jpg
   links:
     - text: LinkedIn
       href: https://www.linkedin.com/in/arsene-laurent-44595b27b/

@@ -1,0 +1,39 @@
+---
+title: "London Marathon Analysis"
+description: |
+  Analysis of London Marathon data from TidyTuesday
+author: Arsene Laurent
+date: February 19, 2025
+format: html
+---
+
+```{r}
+#| echo: false
+#| message: false
+  
+tuesdata <- tidytuesdayR::tt_load('2023-04-25')
+tuesdata <- tidytuesdayR::tt_load(2023, week = 17)
+
+winners <- tuesdata$winners
+london_marathon <- tuesdata$london_marathon
+```
+
+```{r}
+#| echo: false
+#| message: false
+library(ggplot2)
+library(dplyr)
+library(ggthemes)
+
+ggplot(winners, aes(x = Year, y = Time, color = Nationality)) +
+  geom_point() +
+  facet_wrap(~Category) +
+  labs(x = "Year", y = "Time") +
+  theme_solarized(light = FALSE)
+```
+
+This data comes from the 2023-04-25 folder of the TidyTuesday GitHub repository. After selecting the relevant variables and plotting, distinguishing athlete nationality by color and separating into 4 different graphs based on category. From these plots, we can notice that while winning times have decreased slightly for the Men and Women categories over the past 4 decades, times for the Wheelchair Women and Wheelchair Men categories have dramatically improved in the same amount of time.
+
+We can also see that men generally have shorter times than women in either category, and that the winners for the past decade or so have consistently been from the same countries in each category, meaning that each category has a couple of countries that consistently dominate.
+
+Here is a link to the original data repository by nrennie on GitHub: <https://github.com/nrennie/LondonMarathon>
