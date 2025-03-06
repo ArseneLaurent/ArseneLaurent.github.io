@@ -1,0 +1,75 @@
+---
+title: "Mini-Project 2"
+description: |
+  Analysis of Netflix data from TidyTuesday
+author: Arsene Laurent
+date: March 5, 2025
+format: html
+---
+
+```{r}
+netflix_titles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-04-20/netflix_titles.csv')
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(forcats)
+library(ggthemes)
+```
+
+```{r}
+plot_data<- netflix_titles |>
+  filter(str_detect(listed_in, "(?<=Action & ).*Adventure"), !is.na(country)) |>
+  group_by(country) |>
+  summarize(action_count = n(),.groups = "drop") |>
+  arrange(desc(action_count)) |>
+  head(10)
+  
+```
+
+
+```{r}
+ggplot(plot_data, aes(x = reorder(country, action_count), y = action_count, fill = action_count)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Top 10 Countries with the Most Action Movies", x = "Country", y = "Number of Action Movies") +
+  theme_solarized(light = FALSE) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+This shows us that the largest producer of the action movies on Netflix was the United States by far, with India coming in second, and China and Hong Kong taking up a total 3 of the top 10 spots.
+
+```{r}
+plot_data2 <- netflix_titles |>
+  mutate(year_added = str_extract(date_added, "\\d{4}"))
+
+ggplot(plot_data2, aes(x = year_added)) +
+  geom_bar() +
+  facet_wrap(~type) +
+  theme_solarized(light = FALSE) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+With this data, we can see that in all years, Netflix added more movies to its repertoire than it did TV shows.
+```{r}
+plot_data3 <- netflix_titles |>
+  mutate(listed_in = str_split(listed_in, ", *")) |>
+  unnest(listed_in) |>
+  group_by(listed_in) |>
+  summarize(genre_count = n(), .groups = "drop") |>
+  arrange(desc(genre_count)) |>
+  head(10)
+
+ggplot(plot_data3, aes(x = reorder(listed_in, genre_count), y = genre_count)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Top 10 Most Common Genres on Netflix",
+    x = "Genre",
+    y = "Count"
+  ) +
+  theme_solarized(light = FALSE) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+The most common genre on Netflix is International Movies, with Dramas and Comedies close behind. This is likely a bit skewed since any movie not produced in the US is an international movie. Hence, the most popular genre excluding International Movies is Dramas
+
+
+
+Here is a link to the original data by Shivam Bansal: https://www.kaggle.com/datasets/shivamb/netflix-shows  

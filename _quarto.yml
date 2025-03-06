@@ -7,8 +7,10 @@ website:
   title: "ArseneLaurent"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
+      - text: Home
+        href: index.qmd
+      - text: Mini-Project 2
+        href: ds002_project2.qmd
     right: 
       - text: "Data Viz"
         menu: 
@@ -23,5 +25,5 @@ format:
     css: styles.css
     toc: true
 
-editor: visual
+editor: source
 
