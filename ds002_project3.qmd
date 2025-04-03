@@ -1,0 +1,88 @@
+---
+title: "Project 3"
+description: |
+  Probability of Winning in Blackjack with Standard Strategy
+author: Arsene Laurent
+date: April 2, 2025
+format: 
+  html:
+    code-fold: true
+---
+
+In this project, I originally wanted to calculate the probability of getting a royal flush in texas hold em poker. I then pivoted to the probability of being dealt a blackjack in blackjack. This was an idea that was more appealing to me, but I then realized that that probability was much too trivial. I then pivoted again to calculating the probability of winning versus the dealer in blackjack, using standard playing strategy where both the dealer and the player don't hit past 17.
+
+```{r}
+library(purrr)
+library(ggthemes)
+
+simulate_blackjack_game <- function() {
+
+  deck <- c(rep(2:10, 4), rep(10, 12), rep(11, 4)) 
+  deck <- sample(deck, length(deck), replace = FALSE)
+  
+
+  player_hand <- deck[1:2]
+  dealer_hand <- deck[3:4]
+  deck <- deck[-(1:4)] 
+  hand_total <- function(hand) {
+    total <- sum(hand)
+    num_aces <- sum(hand == 11)
+  
+    while (total > 21 & num_aces > 0) {
+      total <- total - 10
+      num_aces <- num_aces - 1
+    }
+    
+    return(total)
+  }
+  
+ 
+  while (hand_total(player_hand) < 17) {
+    player_hand <- c(player_hand, deck[1])  
+    deck <- deck[-1] 
+  }
+  player_total <- hand_total(player_hand)
+  
+
+  while (hand_total(dealer_hand) < 17) {
+    dealer_hand <- c(dealer_hand, deck[1]) 
+    deck <- deck[-1] 
+  }
+  dealer_total <- hand_total(dealer_hand)
+
+  if (player_total > 21) {
+    return("Loss") 
+  } else if (dealer_total > 21 | player_total > dealer_total) {
+    return("Win") 
+  } else if (player_total == dealer_total) {
+    return("Push") 
+  } else {
+    return("Loss") 
+  }
+}
+
+
+num_simulations <- 100000
+results <- map_chr(1:num_simulations, ~ simulate_blackjack_game())
+
+
+win_prob <- mean(results == "Win")
+loss_prob <- mean(results == "Loss")
+push_prob <- mean(results == "Push")
+
+
+cat("Estimated probability of winning:", win_prob, "\n")
+cat("Estimated probability of losing:", loss_prob, "\n")
+cat("Estimated probability of a push (tie):", push_prob, "\n")
+
+
+library(ggplot2)
+df <- data.frame(Result = c("Win", "Loss", "Push"), Probability = c(win_prob, loss_prob, push_prob))
+
+ggplot(df, aes(x = Result, y = Probability, fill = Result)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Estimated Probabilities in Single-Deck Blackjack", y = "Probability", x = "Game Outcome") +
+  theme_minimal() + theme_solarized(light = FALSE)
+```
+
+The graph here shows us that, using a standard strategy, the player has around an 8% greater chance of losing than winning. This tells us that, though the standard strategy is decent, allowing for a win around 40% of the time, it would be prudent for the player to look to employ a more advanced strategy. This would involve basing the decision on whether to hit or stand on the cards that the dealer has been dealt, rather than solely basing that decision on the sum of the player's own cards. Even more advanced strategy cold involve counting cards, but in a casino scenario or even amongst friends such a strategy could get the player into serious trouble.
