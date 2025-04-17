@@ -13,8 +13,8 @@ In general, using AI to evaluate candidates for a position runs the risk of fall
 
 It's also important for people to be aware of what their data is being used for when using people's data for anything, including training AI programs. As mentioned previously, while applicants willingly handed over their data, they likely were not made aware of exactly what their data was going to be used for after they were taken into consideration for the position. Informed consent could have been possible by adding a required field to the application that asks if the applicant is willing to submit their data for use in AI training, though that might open up other hidden biases in the training of the program. It's difficult to provide informed consent for unseen applications, but as long as the use of the data doesn't stray too far from being used to train the AI, what the AI does with that training is well within the boundaries of informed consent.
 
-Articles mentioned:
+Citations:
 
--   Reuters: https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G/
+- Dastin, J. (n.d.). Insight - Amazon scraps secret AI recruiting tool that showed bias against women | reuters. Reuters. https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G/ 
 
--   USCAnnenberg: https://communicationmgmt.usc.edu/blog/ai-in-hr-how-artificial-intelligence-is-changing-hiring
+- How artificial intelligence (AI) in HR is changing hiring. USC Online Communication Degree. (n.d.). https://communicationmgmt.usc.edu/blog/ai-in-hr-how-artificial-intelligence-is-changing-hiring 
