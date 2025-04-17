@@ -125,18 +125,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="./index.html">
+ <span class="dropdown-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./ds002_project2.html" aria-current="page"> 
-<span class="menu-text">Mini-Project 2</span></a>
+        <li>
+    <a class="dropdown-item" href="./ds002_project2.html">
+ <span class="dropdown-text">Mini-Project 2</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./ds002_project3.html"> 
-<span class="menu-text">Project 3</span></a>
+        <li>
+    <a class="dropdown-item" href="./ds002_project3.html">
+ <span class="dropdown-text">Project 3</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Project_4.html">
+ <span class="dropdown-text">Project 4</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
@@ -226,7 +237,7 @@ dbl  (1): release_year
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
 ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.4     
+✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()

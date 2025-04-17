@@ -26,7 +26,6 @@ plot_data<- netflix_titles |>
   
 ```
 
-
 ```{r}
 ggplot(plot_data, aes(x = reorder(country, action_count), y = action_count, fill = action_count)) +
   geom_bar(stat = "identity") +
@@ -49,6 +48,7 @@ ggplot(plot_data2, aes(x = year_added)) +
 ```
 
 With this data, we can see that in all years, Netflix added more movies to its repertoire than it did TV shows.
+
 ```{r}
 plot_data3 <- netflix_titles |>
   mutate(listed_in = str_split(listed_in, ", *")) |>
@@ -68,8 +68,7 @@ ggplot(plot_data3, aes(x = reorder(listed_in, genre_count), y = genre_count)) +
   theme_solarized(light = FALSE) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
 The most common genre on Netflix is International Movies, with Dramas and Comedies close behind. This is likely a bit skewed since any movie not produced in the US is an international movie. Hence, the most popular genre excluding International Movies is Dramas
 
-
-
-Here is a link to the original data by Shivam Bansal: https://www.kaggle.com/datasets/shivamb/netflix-shows  
+Here is a link to the original data by Shivam Bansal: https://www.kaggle.com/datasets/shivamb/netflix-shows

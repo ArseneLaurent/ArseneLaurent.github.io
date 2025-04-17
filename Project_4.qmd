@@ -10,8 +10,9 @@ resume and the job requirements, or fully using AI to select highly valued
 candidates after being trained to be able to distinguish between different 
 values of candidates. Using AI in the hiring process comes with its own set of 
 ethical dilemmas though. Amazon found that its hiring AI was discriminating 
-against women, despite never being explicitly taught to do so. 
-  Amazon had originally wanted to teach their AI to return the top few most 
+against women, despite never being explicitly taught to do so. \\ 
+\indent
+Amazon had originally wanted to teach their AI to return the top few most 
 promising candidates when given a list of applications. However, they inadvertently 
 trained the AI to prefer male applicants over females. 
   The data used to train the AI was collected over the course of 10 years and 
