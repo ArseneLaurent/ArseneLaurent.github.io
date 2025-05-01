@@ -17,6 +17,8 @@ website:
            href: ds002_project3.qmd
          - text: Project 4
            href: Project_4.qmd
+         - text: Project 5
+           href: Project 5.qmd
     right: 
       - text: "Data Viz"
         menu: 
