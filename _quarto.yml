@@ -18,7 +18,7 @@ website:
          - text: Project 4
            href: Project_4.qmd
          - text: Project 5
-           href: Project 5.qmd
+           href: Project_5.qmd
     right: 
       - text: "Data Viz"
         menu: 

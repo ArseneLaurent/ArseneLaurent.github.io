@@ -1,0 +1,87 @@
+---
+title: "Project 5"
+format: 
+  html:
+    code-fold: true
+---
+
+```{r}
+con_traffic <- DBI::dbConnect(
+
+  RMariaDB::MariaDB(),
+
+  dbname = "traffic",
+
+  host = Sys.getenv("TRAFFIC_HOST"),
+
+  user = Sys.getenv("TRAFFIC_USER"),
+
+  password = Sys.getenv("TRAFFIC_PWD")
+
+)
+```
+
+In this project, I plan to use the data from the Florida Statewide, Oregon Statewide, and Washington Statewide tables from the Stanford Open Policing Project dataset to compare the percentages of the stops that each race documented in the table was a part of. I plan to do this by first counting all of the stops in each table, then counting the number of stops each different race had in each state. I will then find the percentage of stops each race was involved in, and store those numbers in a new dataframe. Using this dataframe, I will visualize the data in a bar graph to help demonstrate the races that were involved in the most traffic stops in each of our states of interest. 
+```{r}
+library(DBI)
+get_stops_by_race <- dbGetQuery(con_traffic, "
+SELECT 
+  'Florida' AS state,
+  subject_race,
+  COUNT(*) AS stop_count,
+  ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM fl_statewide_2020_04_01), 2) AS percent_of_total
+FROM fl_statewide_2020_04_01
+WHERE subject_race IS NOT NULL
+GROUP BY subject_race
+
+UNION ALL
+
+-- Oregon
+SELECT 
+  'Oregon' AS state,
+  subject_race,
+  COUNT(*) AS stop_count,
+  ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM or_statewide_2020_04_01), 2) AS percent_of_total
+FROM or_statewide_2020_04_01
+WHERE subject_race IS NOT NULL
+GROUP BY subject_race
+
+UNION ALL
+
+-- Washington
+SELECT 
+  'Washington' AS state,
+  subject_race,
+  COUNT(*) AS stop_count,
+  ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM wa_statewide_2020_04_01), 2) AS percent_of_total
+FROM wa_statewide_2020_04_01
+WHERE subject_race IS NOT NULL
+GROUP BY subject_race;")
+```
+```{r}
+library(ggplot2)
+library(dplyr)
+
+get_stops_by_race |>
+  mutate(
+    state = factor(state, levels = c("Florida", "Oregon", "Washington")),
+    subject_race = factor(subject_race)
+  ) |>
+  ggplot(aes(x = subject_race, y = percent_of_total, fill = subject_race)) +
+  geom_col() +
+  facet_wrap(~ state) +
+  labs(
+    title = "Traffic Stops by Race Across States",
+    x = "Race",
+    y = "Percentage of Stops",
+    fill = "Race"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+Here, we can clearly see that White people were the predominant race involved in traffic stops in all three of our states of interest. However, we notice that Florida had a much higher Hispanic and Black percentage than every other state. It's also worth noting that Washington and Oregon both had relatively high Hispanic percentages in their traffic stops with few other races coming too close, while Florida's Black and Hispanic percentages were pretty similar. 
+
+```{r}
+dbDisconnect(conn=con_traffic)
+```
+
