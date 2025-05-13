@@ -1,5 +1,5 @@
 ---
-title: "Mini-Project 2"
+title: "Netflix Analysis"
 description: |
   Analysis of Netflix data from TidyTuesday
 author: Arsene Laurent

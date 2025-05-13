@@ -1,5 +1,5 @@
 ---
-title: "Project 4"
+title: "Ethics of AI in the Hiring Process"
 format: html
 ---
 
