@@ -36,4 +36,4 @@ This data comes from the 2023-04-25 folder of the TidyTuesday GitHub repository.
 
 We can also see that men generally have shorter times than women in either category, and that the winners for the past decade or so have consistently been from the same countries in each category, meaning that each category has a couple of countries that consistently dominate.
 
-Here is a link to the original data repository by nrennie on GitHub: <https://github.com/nrennie/LondonMarathon>
+Here is a link to the original data repository by nrennie on GitHub: <https://github.com/nrennie/LondonMarathon>, scraped from Wikipedia (1 November 2022) on London Marathon winners, and general data.
