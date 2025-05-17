@@ -4,7 +4,7 @@ project:
 
 website:
   site-url: https://arsenelaurent.github.io/
-  title: "ArseneLaurent"
+  title: "Arsene Laurent"
   navbar:
     left:
       - text: Projects
