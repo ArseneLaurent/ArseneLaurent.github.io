@@ -1,0 +1,46 @@
+---
+title: "Stats Final Project Code"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+
+```{r}
+library(tidyverse)
+ 
+df <- read_csv("Video_Games_Sales_as_at_22_Dec_2016.csv")
+
+head(df)
+```
+
+```{r}
+df_clean <- df |>
+  select(Name, Genre, User_Score) |>
+  filter(!is.na(Genre), !is.na(User_Score), User_Score != "tbd", Genre != "Misc") |>
+  mutate(User_Score = as.numeric(User_Score))
+table(df_clean$Genre)
+```
+
+```{r}
+anova_result <- aov(User_Score ~ Genre, data = df_clean)
+summary(anova_result)
+```
+
+```{r}
+tukey_result <- TukeyHSD(anova_result)
+print(tukey_result)
+```
+```{r}
+plot(anova_result)
+```
+
+```{r}
+ggplot(df_clean, aes(x = Genre, y = User_Score)) +
+  geom_boxplot(fill = "skyblue") +
+  theme_minimal() +
+  labs(title = "User Scores by Video Game Genre", x = "Genre", y = "User Score") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```

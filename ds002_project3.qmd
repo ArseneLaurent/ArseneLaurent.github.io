@@ -7,6 +7,10 @@ date: April 2, 2025
 format: 
   html:
     code-fold: true
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 In this project, I originally wanted to calculate the probability of getting a royal flush in texas hold 'em poker. I then pivoted to the probability of being dealt a blackjack in blackjack. This was an idea that was more appealing to me, but I then realized that that probability was much too trivial. I then pivoted again to calculating the probability of winning versus the dealer in blackjack, using standard playing strategy where both the dealer and the player don't hit past 17.

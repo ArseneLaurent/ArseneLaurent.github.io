@@ -6,11 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Arsene Laurent">
-<meta name="dcterms.date" content="2025-02-19">
-<meta name="description" content="Analysis of London Marathon data from TidyTuesday">
 
-<title>London Marathon Analysis – ArseneLaurent</title>
+<title>Stats Final Project – ArseneLaurent</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -158,31 +189,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">London Marathon Analysis</h1>
+<h1 class="title">Stats Final Project</h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>Analysis of London Marathon data from TidyTuesday</p>
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Arsene Laurent </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">February 19, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -193,17 +207,164 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Video_Games_Sales_as_at_22_Dec_2016.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 16
+  Name       Platform Year_of_Release Genre Publisher NA_Sales EU_Sales JP_Sales
+  &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 Wii Sports Wii      2006            Spor… Nintendo      41.4    29.0      3.77
+2 Super Mar… NES      1985            Plat… Nintendo      29.1     3.58     6.81
+3 Mario Kar… Wii      2008            Raci… Nintendo      15.7    12.8      3.79
+4 Wii Sport… Wii      2009            Spor… Nintendo      15.6    10.9      3.28
+5 Pokemon R… GB       1996            Role… Nintendo      11.3     8.89    10.2 
+6 Tetris     GB       1989            Puzz… Nintendo      23.2     2.26     4.22
+# ℹ 8 more variables: Other_Sales &lt;dbl&gt;, Global_Sales &lt;dbl&gt;,
+#   Critic_Score &lt;dbl&gt;, Critic_Count &lt;dbl&gt;, User_Score &lt;chr&gt;, User_Count &lt;dbl&gt;,
+#   Developer &lt;chr&gt;, Rating &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_clean <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Genre, User_Score) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Genre), <span class="sc">!</span><span class="fu">is.na</span>(User_Score), User_Score <span class="sc">!=</span> <span class="st">"tbd"</span>, Genre <span class="sc">!=</span> <span class="st">"Misc"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">User_Score =</span> <span class="fu">as.numeric</span>(User_Score))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_clean<span class="sc">$</span>Genre)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+      Action    Adventure     Fighting     Platform       Puzzle       Racing 
+        1830          300          399          428          128          641 
+Role-Playing      Shooter   Simulation       Sports     Strategy 
+         743          924          344         1103          311 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>anova_result <span class="ot">&lt;-</span> <span class="fu">aov</span>(User_Score <span class="sc">~</span> Genre, <span class="at">data =</span> df_clean)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+Genre         10    265  26.468   12.02 &lt;2e-16 ***
+Residuals   7140  15719   2.201                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tukey_result <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(anova_result)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tukey_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = User_Score ~ Genre, data = df_clean)
+
+$Genre
+                                diff          lwr          upr     p adj
+Adventure-Action         0.078956284 -0.218606446  0.376519014 0.9988855
+Fighting-Action          0.248462550 -0.015485189  0.512410289 0.0866685
+Platform-Action          0.247358153 -0.009143072  0.503859379 0.0702693
+Puzzle-Action            0.120956284 -0.315811622  0.557724191 0.9983922
+Racing-Action           -0.017850268 -0.237108909  0.201408373 1.0000000
+Role-Playing-Action      0.565471762  0.357657741  0.773285783 0.0000000
+Shooter-Action          -0.012160599 -0.204955411  0.180634213 1.0000000
+Simulation-Action        0.080549307 -0.200187857  0.361286472 0.9978303
+Sports-Action           -0.092846980 -0.274950204  0.089256245 0.8644124
+Strategy-Action          0.241133133 -0.051873532  0.534139798 0.2235348
+Fighting-Adventure       0.169506266 -0.195555557  0.534568088 0.9218860
+Platform-Adventure       0.168401869 -0.191312745  0.528116484 0.9178162
+Puzzle-Adventure         0.042000000 -0.462349015  0.546349015 1.0000000
+Racing-Adventure        -0.096806552 -0.430986260  0.237373155 0.9976485
+Role-Playing-Adventure   0.486515478  0.159730544  0.813300411 0.0000888
+Shooter-Adventure       -0.091116883 -0.408562256  0.226328490 0.9978233
+Simulation-Adventure     0.001593023 -0.375786203  0.378972250 1.0000000
+Sports-Adventure        -0.171803264 -0.482871278  0.139264750 0.7932526
+Strategy-Adventure       0.162176849 -0.224416776  0.548770474 0.9596879
+Platform-Fighting       -0.001104397 -0.333549031  0.331340238 1.0000000
+Puzzle-Fighting         -0.127506266 -0.612782228  0.357769697 0.9989761
+Racing-Fighting         -0.266312818 -0.570945232  0.038319596 0.1524710
+Role-Playing-Fighting    0.317009212  0.020507571  0.613510854 0.0245254
+Shooter-Fighting        -0.260623149 -0.546798611  0.025552314 0.1131310
+Simulation-Fighting     -0.167913242 -0.519395691  0.183569206 0.9070380
+Sports-Fighting         -0.341309529 -0.620393998 -0.062225061 0.0039991
+Strategy-Fighting       -0.007329417 -0.368687220  0.354028386 1.0000000
+Puzzle-Platform         -0.126401869 -0.607668147  0.354864408 0.9989797
+Racing-Platform         -0.265208421 -0.563412005  0.032995162 0.1350622
+Role-Playing-Platform    0.318113609  0.028221054  0.608006163 0.0180018
+Shooter-Platform        -0.259518752 -0.538840905  0.019803401 0.0965682
+Simulation-Platform     -0.166808846 -0.512734244  0.179116552 0.9016910
+Sports-Platform         -0.340205133 -0.612257720 -0.068152546 0.0028001
+Strategy-Platform       -0.006225020 -0.362179977  0.349729937 1.0000000
+Racing-Puzzle           -0.138806552 -0.601298393  0.323685288 0.9968423
+Role-Playing-Puzzle      0.444515478 -0.012661751  0.901692707 0.0652391
+Shooter-Puzzle          -0.133116883 -0.583665649  0.317431883 0.9972276
+Simulation-Puzzle       -0.040406977 -0.535015616  0.454201663 1.0000000
+Sports-Puzzle           -0.213803264 -0.659881660  0.232275132 0.9051910
+Strategy-Puzzle          0.120176849 -0.381497604  0.621851302 0.9995446
+Role-Playing-Racing      0.583322030  0.325796951  0.840847109 0.0000000
+Shooter-Racing           0.005689669 -0.239875675  0.251255013 1.0000000
+Simulation-Racing        0.098399576 -0.220890033  0.417689184 0.9960739
+Sports-Racing           -0.074996712 -0.312260453  0.162267030 0.9951752
+Strategy-Racing          0.258983401 -0.071145974  0.589112776 0.2894163
+Shooter-Role-Playing    -0.577632361 -0.813035534 -0.342229188 0.0000000
+Simulation-Role-Playing -0.484922455 -0.796464057 -0.173380852 0.0000297
+Sports-Role-Playing     -0.658318742 -0.885048534 -0.431588949 0.0000000
+Strategy-Role-Playing   -0.324338629 -0.646980412 -0.001696846 0.0474768
+Simulation-Shooter       0.092709906 -0.209020672  0.394440484 0.9961690
+Sports-Shooter          -0.080686381 -0.293734663  0.132361902 0.9804661
+Strategy-Shooter         0.253293732 -0.059884958  0.566472422 0.2465809
+Sports-Simulation       -0.173396287 -0.468409993  0.121617419 0.7225472
+Strategy-Simulation      0.160583826 -0.213213456  0.534381108 0.9526699
+Strategy-Sports          0.333980113  0.027267483  0.640692742 0.0197723</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(anova_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="LondonMarathon_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Stats-Final-Project_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats-Final-Project_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats-Final-Project_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats-Final-Project_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>This data comes from the 2023-04-25 folder of the TidyTuesday GitHub repository. After selecting the relevant variables and plotting, distinguishing athlete nationality by color and separating into 4 different graphs based on category. From these plots, we can notice that while winning times have decreased slightly for the Men and Women categories over the past 4 decades, times for the Wheelchair Women and Wheelchair Men categories have dramatically improved in the same amount of time.</p>
-<p>We can also see that men generally have shorter times than women in either category, and that the winners for the past decade or so have consistently been from the same countries in each category, meaning that each category has a couple of countries that consistently dominate.</p>
-<p>Here is a link to the original data repository by nrennie on GitHub: <a href="https://github.com/nrennie/LondonMarathon" class="uri">https://github.com/nrennie/LondonMarathon</a>, scraped from Wikipedia (1 November 2022) on London Marathon winners, and general data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_clean, <span class="fu">aes</span>(<span class="at">x =</span> Genre, <span class="at">y =</span> User_Score)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"User Scores by Video Game Genre"</span>, <span class="at">x =</span> <span class="st">"Genre"</span>, <span class="at">y =</span> <span class="st">"User Score"</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Stats-Final-Project_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 

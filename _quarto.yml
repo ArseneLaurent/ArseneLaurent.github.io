@@ -19,8 +19,11 @@ website:
            href: Project_4.qmd
          - text: Traffic Stops by Race in FL, OR, and WA
            href: Project_5.qmd
+         - text: Stats Final Project Code
+           href: Stats_Final_Project_Code.qmd
       - text: Blackjack Simulation Presentation
         href: Blackjack_Simulation_Presentation.qmd
+      
     right: 
       - text: "Data Viz"
         menu: 
