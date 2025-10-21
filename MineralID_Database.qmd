@@ -1320,16 +1320,4 @@ viewof selectedMineral = Inputs.select(
   }
 }
 ```
-
 ---
-
-## How to Use This Database
-
-1. **Start with what you observe**: Adjust the hardness range if you can test it, select colors you see, identify the luster type
-2. **Narrow down results**: Use streak color if you can perform a streak test
-3. **Compare candidates**: Look at the detailed properties of matching minerals
-4. **Cross-reference**: Check multiple properties to confirm your identification
-
-## Adding More Minerals
-
-To expand this database, add more mineral objects to the `minerals` array with the same property structure. You can also add new filter categories by creating additional input controls and updating the filtering logic.
