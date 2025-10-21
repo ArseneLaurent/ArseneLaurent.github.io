@@ -19,8 +19,6 @@ website:
            href: Project_4.qmd
          - text: Project 5
            href: Project_5.qmd
-      - text: MineralID
-        href: MineralID_Database.qmd
     right: 
       - text: "Data Viz"
         menu: 
