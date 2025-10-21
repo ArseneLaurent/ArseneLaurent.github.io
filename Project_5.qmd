@@ -1,8 +1,12 @@
 ---
-title: "Project 5"
+title: "Traffic Stops by Race in FL, OR, and WA"
 format: 
   html:
     code-fold: true
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ```{r}
@@ -61,6 +65,7 @@ GROUP BY subject_race;")
 ```{r}
 library(ggplot2)
 library(dplyr)
+library(ggthemes)
 
 get_stops_by_race |>
   mutate(
@@ -76,7 +81,7 @@ get_stops_by_race |>
     y = "Percentage of Stops",
     fill = "Race"
   ) +
-  theme_minimal(base_size = 14) +
+  theme_solarized(light = FALSE, base_size = 14) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 Here, we can clearly see that White people were the predominant race involved in traffic stops in all three of our states of interest. However, we notice that Florida had a much higher Hispanic and Black percentage than every other state. It's also worth noting that Washington and Oregon both had relatively high Hispanic percentages in their traffic stops with few other races coming too close, while Florida's Black and Hispanic percentages were pretty similar. 

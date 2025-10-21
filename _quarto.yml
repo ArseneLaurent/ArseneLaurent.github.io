@@ -4,28 +4,33 @@ project:
 
 website:
   site-url: https://arsenelaurent.github.io/
-  title: "ArseneLaurent"
+  title: "Arsene Laurent"
   navbar:
     left:
       - text: Projects
         menu:
          - text: Home
            href: index.qmd
-         - text: Mini-Project 2
+         - text: Netflix Analysis
            href: ds002_project2.qmd
-         - text: Project 3
+         - text: Blackjack Simulation
            href: ds002_project3.qmd
-         - text: Project 4
+         - text: Ethics of AI in the Hiring Process
            href: Project_4.qmd
-         - text: Project 5
+         - text: Traffic Stops by Race in FL, OR, and WA
            href: Project_5.qmd
+         - text: Stats Final Project Code
+           href: Stats_Final_Project_Code.qmd
+      - text: Blackjack Simulation Presentation
+        href: Blackjack_Simulation_Presentation.qmd
+      
     right: 
       - text: "Data Viz"
         menu: 
          - text: "London Marathon"
-           href: LondonMarathon.html
+           href: LondonMarathon.qmd
          - text: "Chocolate Ratings"
-           href: ChocolateRatings.html
+           href: ChocolateRatings.qmd
 
 format:
   html:

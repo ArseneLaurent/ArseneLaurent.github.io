@@ -1,10 +1,16 @@
 ---
-title: "Mini-Project 2"
+title: "Netflix Analysis"
 description: |
   Analysis of Netflix data from TidyTuesday
 author: Arsene Laurent
 date: March 5, 2025
-format: html
+format:
+  html:
+    code-fold: true
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ```{r}
@@ -27,11 +33,11 @@ plot_data<- netflix_titles |>
 ```
 
 ```{r}
-ggplot(plot_data, aes(x = reorder(country, action_count), y = action_count, fill = action_count)) +
+ggplot(plot_data, aes(x = reorder(country, action_count), y = action_count)) +
   geom_bar(stat = "identity") +
   labs(title = "Top 10 Countries with the Most Action Movies", x = "Country", y = "Number of Action Movies") +
   theme_solarized(light = FALSE) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + scale_fill_grey()
 ```
 
 This shows us that the largest producer of the action movies on Netflix was the United States by far, with India coming in second, and China and Hong Kong taking up a total 3 of the top 10 spots.
