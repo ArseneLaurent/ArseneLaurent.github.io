@@ -23,6 +23,8 @@ website:
            href: Stats_Final_Project_Code.qmd
       - text: Blackjack Simulation Presentation
         href: Blackjack_Simulation_Presentation.qmd
+      - text: MineralID
+        href: MineralID_Database.qmd
       
     right: 
       - text: "Data Viz"

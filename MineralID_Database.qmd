@@ -1,0 +1,1335 @@
+---
+title: "Mineral Identification Database"
+subtitle: "Interactive mineral identification using observed properties"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    embed-resources: true
+---
+
+# Mineral Property Search
+
+Use the filters below to identify minerals based on their observed properties. Start by selecting known properties and the database will show matching minerals.
+
+```{ojs}
+// Mineral database - comprehensive list from Geology 127
+minerals = [
+  // GROUP 1: FRAMEWORK SILICATES
+  {
+    name: "Quartz",
+    formula: "SiO₂",
+    hardness: [7, 7],
+    specific_gravity: [2.65, 2.65],
+    colors: ["colorless", "white", "gray", "purple", "yellow", "pink", "brown", "black"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Framework Silicate"
+  },
+  {
+    name: "Opal",
+    formula: "SiO₂·nH₂O",
+    hardness: [5, 6.5],
+    specific_gravity: [1.9, 2.3],
+    colors: ["colorless", "white", "yellow", "red", "orange", "green", "blue", "black"],
+    streak: "white",
+    luster: "vitreous to resinous",
+    crystal_system: "amorphous",
+    transparency: "transparent to opaque",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Framework Silicate"
+  },
+  {
+    name: "Albite",
+    formula: "NaAlSi₃O₈",
+    hardness: [6, 6.5],
+    specific_gravity: [2.62, 2.65],
+    colors: ["white", "colorless", "gray", "bluish"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "triclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven to conchoidal",
+    group: "Framework Silicate - Plagioclase"
+  },
+  {
+    name: "Labradorite",
+    formula: "(Ca,Na)(Al,Si)₄O₈",
+    hardness: [6, 6.5],
+    specific_gravity: [2.68, 2.72],
+    colors: ["gray", "white", "colorless"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "triclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Framework Silicate - Plagioclase"
+  },
+  {
+    name: "Orthoclase",
+    formula: "KAlSi₃O₈",
+    hardness: [6, 6.5],
+    specific_gravity: [2.55, 2.63],
+    colors: ["white", "pink", "gray", "yellow"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven to conchoidal",
+    group: "Framework Silicate - K-Feldspar"
+  },
+  {
+    name: "Microcline",
+    formula: "KAlSi₃O₈",
+    hardness: [6, 6.5],
+    specific_gravity: [2.54, 2.57],
+    colors: ["white", "pink", "red", "green", "gray"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "triclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Framework Silicate - K-Feldspar"
+  },
+  {
+    name: "Muscovite",
+    formula: "KAl₂(AlSi₃O₁₀)(OH)₂",
+    hardness: [2, 2.5],
+    specific_gravity: [2.77, 2.88],
+    colors: ["colorless", "white", "gray", "yellow", "green", "brown"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect basal",
+    fracture: "uneven",
+    group: "Sheet Silicate - Mica"
+  },
+  {
+    name: "Biotite",
+    formula: "K(Mg,Fe)₃(AlSi₃O₁₀)(OH)₂",
+    hardness: [2.5, 3],
+    specific_gravity: [2.7, 3.3],
+    colors: ["black", "dark brown", "dark green"],
+    streak: "white to gray",
+    luster: "vitreous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "transparent to opaque",
+    cleavage: "perfect basal",
+    fracture: "uneven",
+    group: "Sheet Silicate - Mica"
+  },
+  {
+    name: "Chlorite",
+    formula: "(Mg,Fe)₃(Si,Al)₄O₁₀(OH)₂·(Mg,Fe)₃(OH)₆",
+    hardness: [2, 2.5],
+    specific_gravity: [2.6, 3.3],
+    colors: ["green", "yellow-green", "olive green"],
+    streak: "white to pale green",
+    luster: "vitreous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Sheet Silicate"
+  },
+  {
+    name: "Talc",
+    formula: "Mg₃Si₄O₁₀(OH)₂",
+    hardness: [1, 1],
+    specific_gravity: [2.58, 2.83],
+    colors: ["white", "gray", "green", "brown"],
+    streak: "white",
+    luster: "pearly to greasy",
+    crystal_system: "monoclinic",
+    transparency: "translucent",
+    cleavage: "perfect basal",
+    fracture: "uneven",
+    group: "Sheet Silicate"
+  },
+  {
+    name: "Kaolinite",
+    formula: "Al₂Si₂O₅(OH)₄",
+    hardness: [2, 2.5],
+    specific_gravity: [2.6, 2.63],
+    colors: ["white", "gray", "yellow", "brown"],
+    streak: "white",
+    luster: "dull to pearly",
+    crystal_system: "triclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "earthy",
+    group: "Sheet Silicate - Clay"
+  },
+  
+  // GROUP 2: CHAIN, RING, ISLAND SILICATES
+  {
+    name: "Hornblende",
+    formula: "(Ca,Na)₂₋₃(Mg,Fe,Al)₅(Al,Si)₈O₂₂(OH)₂",
+    hardness: [5, 6],
+    specific_gravity: [3.0, 3.4],
+    colors: ["dark green", "black", "brown"],
+    streak: "white to gray",
+    luster: "vitreous",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect at 56° and 124°",
+    fracture: "uneven",
+    group: "Chain Silicate - Amphibole"
+  },
+  {
+    name: "Augite",
+    formula: "(Ca,Na)(Mg,Fe,Al,Ti)(Si,Al)₂O₆",
+    hardness: [5.5, 6],
+    specific_gravity: [3.2, 3.6],
+    colors: ["black", "dark green", "brown"],
+    streak: "greenish-white",
+    luster: "vitreous to dull",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "good at 87° and 93°",
+    fracture: "uneven to conchoidal",
+    group: "Chain Silicate - Pyroxene"
+  },
+  {
+    name: "Olivine",
+    formula: "(Mg,Fe)₂SiO₄",
+    hardness: [6.5, 7],
+    specific_gravity: [3.27, 4.37],
+    colors: ["olive green", "yellow-green", "brown"],
+    streak: "white to gray",
+    luster: "vitreous",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "conchoidal",
+    group: "Island Silicate"
+  },
+  {
+    name: "Almandine",
+    formula: "Fe₃Al₂(SiO₄)₃",
+    hardness: [7, 7.5],
+    specific_gravity: [4.1, 4.3],
+    colors: ["red", "brown-red", "black"],
+    streak: "white",
+    luster: "vitreous to resinous",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "none",
+    fracture: "conchoidal to uneven",
+    group: "Island Silicate - Garnet"
+  },
+  {
+    name: "Tourmaline",
+    formula: "(Na,Ca)(Li,Mg,Al)(Al,Fe,Mn)₆(BO₃)₃(Si₆O₁₈)(OH)₄",
+    hardness: [7, 7.5],
+    specific_gravity: [3.0, 3.2],
+    colors: ["black", "pink", "green", "blue", "brown", "colorless"],
+    streak: "white",
+    luster: "vitreous to resinous",
+    crystal_system: "hexagonal",
+    transparency: "transparent to opaque",
+    cleavage: "poor",
+    fracture: "uneven to conchoidal",
+    group: "Ring Silicate"
+  },
+  {
+    name: "Beryl",
+    formula: "Be₃Al₂Si₆O₁₈",
+    hardness: [7.5, 8],
+    specific_gravity: [2.6, 2.9],
+    colors: ["green", "blue", "yellow", "pink", "white", "colorless"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "conchoidal to uneven",
+    group: "Ring Silicate"
+  },
+  {
+    name: "Epidote",
+    formula: "Ca₂(Al,Fe)₃(SiO₄)₃(OH)",
+    hardness: [6, 7],
+    specific_gravity: [3.3, 3.5],
+    colors: ["pistachio green", "yellow-green", "black"],
+    streak: "white to gray",
+    luster: "vitreous",
+    crystal_system: "monoclinic",
+    transparency: "transparent to opaque",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Disilicate"
+  },
+  {
+    name: "Kyanite",
+    formula: "Al₂SiO₅",
+    hardness: [4.5, 7],
+    specific_gravity: [3.53, 3.67],
+    colors: ["blue", "white", "gray", "green"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "triclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "splintery",
+    group: "Island Silicate"
+  },
+  
+  // GROUP 3: NON-SILICATES
+  {
+    name: "Calcite",
+    formula: "CaCO₃",
+    hardness: [3, 3],
+    specific_gravity: [2.71, 2.71],
+    colors: ["colorless", "white", "gray", "yellow", "orange", "red", "pink", "blue", "green", "brown", "black"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "perfect rhombohedral",
+    fracture: "conchoidal",
+    group: "Carbonate"
+  },
+  {
+    name: "Dolomite",
+    formula: "CaMg(CO₃)₂",
+    hardness: [3.5, 4],
+    specific_gravity: [2.85, 2.95],
+    colors: ["white", "gray", "pink", "brown"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "perfect rhombohedral",
+    fracture: "conchoidal",
+    group: "Carbonate"
+  },
+  {
+    name: "Malachite",
+    formula: "Cu₂CO₃(OH)₂",
+    hardness: [3.5, 4],
+    specific_gravity: [3.6, 4.0],
+    colors: ["bright green", "dark green"],
+    streak: "light green",
+    luster: "silky to dull",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "subconchoidal to uneven",
+    group: "Carbonate"
+  },
+  {
+    name: "Azurite",
+    formula: "Cu₃(CO₃)₂(OH)₂",
+    hardness: [3.5, 4],
+    specific_gravity: [3.7, 3.9],
+    colors: ["azure blue", "dark blue"],
+    streak: "light blue",
+    luster: "vitreous",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "conchoidal",
+    group: "Carbonate"
+  },
+  {
+    name: "Gypsum",
+    formula: "CaSO₄·2H₂O",
+    hardness: [1.5, 2],
+    specific_gravity: [2.31, 2.33],
+    colors: ["colorless", "white", "gray", "yellow", "red", "brown"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "conchoidal to fibrous",
+    group: "Sulfate"
+  },
+  {
+    name: "Barite",
+    formula: "BaSO₄",
+    hardness: [3, 3.5],
+    specific_gravity: [4.3, 4.6],
+    colors: ["colorless", "white", "yellow", "brown", "blue", "gray"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Sulfate"
+  },
+  {
+    name: "Halite",
+    formula: "NaCl",
+    hardness: [2, 2.5],
+    specific_gravity: [2.1, 2.2],
+    colors: ["colorless", "white", "blue", "purple", "pink", "yellow"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect cubic",
+    fracture: "conchoidal",
+    group: "Halide"
+  },
+  {
+    name: "Fluorite",
+    formula: "CaF₂",
+    hardness: [4, 4],
+    specific_gravity: [3.0, 3.3],
+    colors: ["colorless", "white", "purple", "blue", "green", "yellow", "pink"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect octahedral",
+    fracture: "conchoidal",
+    group: "Halide"
+  },
+  {
+    name: "Apatite",
+    formula: "Ca₅(PO₄)₃(F,Cl,OH)",
+    hardness: [5, 5],
+    specific_gravity: [3.1, 3.2],
+    colors: ["green", "blue", "yellow", "brown", "purple", "colorless"],
+    streak: "white",
+    luster: "vitreous to resinous",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "conchoidal",
+    group: "Phosphate"
+  },
+  
+  // GROUP 4: OXIDES & HYDROXIDES
+  {
+    name: "Magnetite",
+    formula: "Fe₃O₄",
+    hardness: [5.5, 6.5],
+    specific_gravity: [5.17, 5.18],
+    colors: ["black", "dark gray"],
+    streak: "black",
+    luster: "metallic",
+    crystal_system: "cubic",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "subconchoidal to uneven",
+    group: "Oxide"
+  },
+  {
+    name: "Hematite",
+    formula: "Fe₂O₃",
+    hardness: [5, 6.5],
+    specific_gravity: [4.9, 5.3],
+    colors: ["black", "gray", "red", "reddish-brown"],
+    streak: "red to reddish-brown",
+    luster: "metallic to dull",
+    crystal_system: "hexagonal",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "uneven to subconchoidal",
+    group: "Oxide"
+  },
+  {
+    name: "Corundum",
+    formula: "Al₂O₃",
+    hardness: [9, 9],
+    specific_gravity: [3.9, 4.1],
+    colors: ["colorless", "blue", "red", "yellow", "brown", "gray"],
+    streak: "white",
+    luster: "vitreous to adamantine",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "none",
+    fracture: "uneven to conchoidal",
+    group: "Oxide"
+  },
+  {
+    name: "Rutile",
+    formula: "TiO₂",
+    hardness: [6, 6.5],
+    specific_gravity: [4.2, 4.3],
+    colors: ["reddish-brown", "red", "black", "yellow"],
+    streak: "pale brown to yellow",
+    luster: "metallic to adamantine",
+    crystal_system: "tetragonal",
+    transparency: "transparent to opaque",
+    cleavage: "good",
+    fracture: "uneven to subconchoidal",
+    group: "Oxide"
+  },
+  {
+    name: "Limonite",
+    formula: "FeO(OH)·nH₂O",
+    hardness: [4, 5.5],
+    specific_gravity: [2.7, 4.3],
+    colors: ["yellow", "brown", "black"],
+    streak: "yellow-brown",
+    luster: "dull to earthy",
+    crystal_system: "amorphous",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "earthy",
+    group: "Hydroxide"
+  },
+  {
+    name: "Goethite",
+    formula: "FeO(OH)",
+    hardness: [5, 5.5],
+    specific_gravity: [3.3, 4.3],
+    colors: ["yellow-brown", "brown", "black"],
+    streak: "yellow-brown to orange-yellow",
+    luster: "adamantine to dull",
+    crystal_system: "orthorhombic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Hydroxide"
+  },
+  
+  // Additional GROUP 1 minerals
+  {
+    name: "Jasper",
+    formula: "SiO₂",
+    hardness: [6.5, 7],
+    specific_gravity: [2.58, 2.91],
+    colors: ["red", "brown", "yellow", "green"],
+    streak: "white",
+    luster: "dull to vitreous",
+    crystal_system: "hexagonal",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Framework Silicate"
+  },
+  {
+    name: "Flint",
+    formula: "SiO₂",
+    hardness: [7, 7],
+    specific_gravity: [2.6, 2.65],
+    colors: ["gray", "black", "brown"],
+    streak: "white",
+    luster: "dull to waxy",
+    crystal_system: "hexagonal",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Framework Silicate"
+  },
+  {
+    name: "Chalcedony",
+    formula: "SiO₂",
+    hardness: [6.5, 7],
+    specific_gravity: [2.57, 2.64],
+    colors: ["white", "gray", "blue", "brown"],
+    streak: "white",
+    luster: "waxy to vitreous",
+    crystal_system: "hexagonal",
+    transparency: "translucent",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Framework Silicate"
+  },
+  {
+    name: "Sodalite",
+    formula: "Na₄Al₃Si₃O₁₂Cl",
+    hardness: [5.5, 6],
+    specific_gravity: [2.14, 2.40],
+    colors: ["blue", "gray", "pink", "green", "white"],
+    streak: "white",
+    luster: "vitreous to greasy",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "uneven to conchoidal",
+    group: "Framework Silicate - Feldspathoid"
+  },
+  {
+    name: "Nepheline",
+    formula: "(Na,K)AlSiO₄",
+    hardness: [5.5, 6],
+    specific_gravity: [2.55, 2.66],
+    colors: ["colorless", "white", "gray", "yellow", "green", "red"],
+    streak: "white",
+    luster: "vitreous to greasy",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "conchoidal",
+    group: "Framework Silicate - Feldspathoid"
+  },
+  {
+    name: "Stilbite",
+    formula: "NaCa₄(Al₉Si₂₇O₇₂)·28H₂O",
+    hardness: [3.5, 4],
+    specific_gravity: [2.1, 2.2],
+    colors: ["white", "yellow", "pink", "brown", "red"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Framework Silicate - Zeolite"
+  },
+  {
+    name: "Natrolite",
+    formula: "Na₂Al₂Si₃O₁₀·2H₂O",
+    hardness: [5, 5.5],
+    specific_gravity: [2.2, 2.26],
+    colors: ["colorless", "white", "yellow", "red"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Framework Silicate - Zeolite"
+  },
+  {
+    name: "Analcime",
+    formula: "NaAlSi₂O₆·H₂O",
+    hardness: [5, 5.5],
+    specific_gravity: [2.22, 2.29],
+    colors: ["colorless", "white", "gray", "pink", "yellow", "green"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "very poor",
+    fracture: "subconchoidal",
+    group: "Framework Silicate - Zeolite"
+  },
+  {
+    name: "Fuchsite",
+    formula: "K(Al,Cr)₂(AlSi₃O₁₀)(OH)₂",
+    hardness: [2, 3],
+    specific_gravity: [2.82, 2.85],
+    colors: ["green", "emerald green"],
+    streak: "white",
+    luster: "pearly to vitreous",
+    crystal_system: "monoclinic",
+    transparency: "translucent",
+    cleavage: "perfect basal",
+    fracture: "uneven",
+    group: "Sheet Silicate - Mica"
+  },
+  {
+    name: "Lepidolite",
+    formula: "K(Li,Al)₃(Al,Si)₄O₁₀(F,OH)₂",
+    hardness: [2.5, 3],
+    specific_gravity: [2.8, 3.3],
+    colors: ["pink", "purple", "gray", "white"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect basal",
+    fracture: "uneven",
+    group: "Sheet Silicate - Mica"
+  },
+  {
+    name: "Montmorillonite",
+    formula: "(Na,Ca)₀.₃(Al,Mg)₂Si₄O₁₀(OH)₂·nH₂O",
+    hardness: [1, 2],
+    specific_gravity: [2.0, 3.0],
+    colors: ["white", "gray", "yellow", "green"],
+    streak: "white",
+    luster: "dull to earthy",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "earthy",
+    group: "Sheet Silicate - Clay"
+  },
+  {
+    name: "Serpentine",
+    formula: "Mg₃Si₂O₅(OH)₄",
+    hardness: [2.5, 5.5],
+    specific_gravity: [2.5, 2.6],
+    colors: ["green", "yellow-green", "brown", "black"],
+    streak: "white",
+    luster: "greasy to waxy",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "splintery to conchoidal",
+    group: "Sheet Silicate"
+  },
+  {
+    name: "Prehnite",
+    formula: "Ca₂Al(AlSi₃O₁₀)(OH)₂",
+    hardness: [6, 6.5],
+    specific_gravity: [2.8, 3.0],
+    colors: ["light green", "yellow-green", "white"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "good",
+    fracture: "uneven",
+    group: "Sheet Silicate"
+  },
+  
+  // Additional GROUP 2 minerals
+  {
+    name: "Tremolite",
+    formula: "Ca₂Mg₅Si₈O₂₂(OH)₂",
+    hardness: [5, 6],
+    specific_gravity: [2.9, 3.2],
+    colors: ["white", "gray", "green"],
+    streak: "white",
+    luster: "vitreous to silky",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven to splintery",
+    group: "Chain Silicate - Amphibole"
+  },
+  {
+    name: "Actinolite",
+    formula: "Ca₂(Mg,Fe)₅Si₈O₂₂(OH)₂",
+    hardness: [5, 6],
+    specific_gravity: [3.0, 3.4],
+    colors: ["green", "dark green", "black"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "splintery",
+    group: "Chain Silicate - Amphibole"
+  },
+  {
+    name: "Glaucophane",
+    formula: "Na₂(Mg,Fe)₃Al₂Si₈O₂₂(OH)₂",
+    hardness: [6, 6.5],
+    specific_gravity: [3.0, 3.15],
+    colors: ["blue", "gray-blue", "lavender-blue"],
+    streak: "light blue",
+    luster: "vitreous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Chain Silicate - Amphibole"
+  },
+  {
+    name: "Diopside",
+    formula: "CaMgSi₂O₆",
+    hardness: [5.5, 6.5],
+    specific_gravity: [3.2, 3.4],
+    colors: ["green", "white", "gray", "brown"],
+    streak: "white to light green",
+    luster: "vitreous to dull",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "good",
+    fracture: "uneven to conchoidal",
+    group: "Chain Silicate - Pyroxene"
+  },
+  {
+    name: "Enstatite",
+    formula: "MgSiO₃",
+    hardness: [5, 6],
+    specific_gravity: [3.2, 3.5],
+    colors: ["gray", "green", "brown", "yellow"],
+    streak: "white to gray",
+    luster: "vitreous to pearly",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "good",
+    fracture: "uneven",
+    group: "Chain Silicate - Pyroxene"
+  },
+  {
+    name: "Wollastonite",
+    formula: "CaSiO₃",
+    hardness: [4.5, 5],
+    specific_gravity: [2.8, 3.1],
+    colors: ["white", "gray", "colorless"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "triclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "splintery",
+    group: "Chain Silicate - Pyroxenoid"
+  },
+  {
+    name: "Rhodonite",
+    formula: "MnSiO₃",
+    hardness: [5.5, 6.5],
+    specific_gravity: [3.4, 3.7],
+    colors: ["pink", "red", "brown"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "triclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "conchoidal to uneven",
+    group: "Chain Silicate - Pyroxenoid"
+  },
+  {
+    name: "Spodumene",
+    formula: "LiAlSi₂O₆",
+    hardness: [6.5, 7],
+    specific_gravity: [3.0, 3.2],
+    colors: ["white", "gray", "pink", "green", "yellow"],
+    streak: "white",
+    luster: "vitreous to dull",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven to subconchoidal",
+    group: "Chain Silicate - Pyroxenoid"
+  },
+  {
+    name: "Cordierite",
+    formula: "(Mg,Fe)₂Al₄Si₅O₁₈",
+    hardness: [7, 7.5],
+    specific_gravity: [2.53, 2.78],
+    colors: ["blue", "violet", "gray", "brown"],
+    streak: "white",
+    luster: "vitreous to greasy",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "conchoidal to uneven",
+    group: "Ring Silicate"
+  },
+  {
+    name: "Piemontite",
+    formula: "Ca₂(Al,Mn,Fe)₃(SiO₄)₃(OH)",
+    hardness: [6, 6.5],
+    specific_gravity: [3.4, 3.5],
+    colors: ["reddish-brown", "red", "black"],
+    streak: "red",
+    luster: "vitreous",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Disilicate"
+  },
+  {
+    name: "Vesuvianite",
+    formula: "Ca₁₀(Mg,Fe)₂Al₄(SiO₄)₅(Si₂O₇)₂(OH,F)₄",
+    hardness: [6.5, 7],
+    specific_gravity: [3.32, 3.47],
+    colors: ["green", "brown", "yellow", "blue"],
+    streak: "white",
+    luster: "vitreous to resinous",
+    crystal_system: "tetragonal",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "uneven to conchoidal",
+    group: "Disilicate"
+  },
+  {
+    name: "Spessartine",
+    formula: "Mn₃Al₂(SiO₄)₃",
+    hardness: [6.5, 7.5],
+    specific_gravity: [4.12, 4.20],
+    colors: ["orange", "red", "brown"],
+    streak: "white",
+    luster: "vitreous to resinous",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Island Silicate - Garnet"
+  },
+  {
+    name: "Topaz",
+    formula: "Al₂SiO₄(F,OH)₂",
+    hardness: [8, 8],
+    specific_gravity: [3.49, 3.57],
+    colors: ["colorless", "blue", "yellow", "pink", "brown"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "subconchoidal to uneven",
+    group: "Island Silicate"
+  },
+  {
+    name: "Titanite",
+    formula: "CaTiSiO₅",
+    hardness: [5, 5.5],
+    specific_gravity: [3.48, 3.60],
+    colors: ["brown", "yellow", "green", "black"],
+    streak: "white",
+    luster: "adamantine to resinous",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "good",
+    fracture: "conchoidal",
+    group: "Island Silicate"
+  },
+  {
+    name: "Staurolite",
+    formula: "Fe₂Al₉Si₄O₂₃(OH)",
+    hardness: [7, 7.5],
+    specific_gravity: [3.65, 3.77],
+    colors: ["brown", "reddish-brown", "black"],
+    streak: "white to gray",
+    luster: "vitreous to resinous",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "poor",
+    fracture: "subconchoidal",
+    group: "Island Silicate"
+  },
+  {
+    name: "Zircon",
+    formula: "ZrSiO₄",
+    hardness: [7.5, 7.5],
+    specific_gravity: [4.6, 4.7],
+    colors: ["brown", "red", "yellow", "green", "blue", "colorless"],
+    streak: "white",
+    luster: "adamantine to vitreous",
+    crystal_system: "tetragonal",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "conchoidal",
+    group: "Island Silicate"
+  },
+  {
+    name: "Andalusite",
+    formula: "Al₂SiO₅",
+    hardness: [6.5, 7.5],
+    specific_gravity: [3.13, 3.17],
+    colors: ["pink", "red", "brown", "green", "white"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "good",
+    fracture: "uneven to subconchoidal",
+    group: "Island Silicate"
+  },
+  {
+    name: "Sillimanite",
+    formula: "Al₂SiO₅",
+    hardness: [6.5, 7.5],
+    specific_gravity: [3.23, 3.27],
+    colors: ["white", "gray", "brown", "green"],
+    streak: "white",
+    luster: "vitreous to silky",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Island Silicate"
+  },
+  
+  // Additional GROUP 3 minerals
+  {
+    name: "Aragonite",
+    formula: "CaCO₃",
+    hardness: [3.5, 4],
+    specific_gravity: [2.93, 2.95],
+    colors: ["white", "gray", "colorless", "yellow", "blue", "green"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "subconchoidal",
+    group: "Carbonate"
+  },
+  {
+    name: "Rhodochrosite",
+    formula: "MnCO₃",
+    hardness: [3.5, 4],
+    specific_gravity: [3.5, 3.7],
+    colors: ["pink", "red", "yellow", "brown"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "perfect rhombohedral",
+    fracture: "uneven",
+    group: "Carbonate"
+  },
+  {
+    name: "Siderite",
+    formula: "FeCO₃",
+    hardness: [3.5, 4.5],
+    specific_gravity: [3.7, 3.9],
+    colors: ["brown", "yellow", "gray", "green"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "perfect rhombohedral",
+    fracture: "uneven to conchoidal",
+    group: "Carbonate"
+  },
+  {
+    name: "Sylvite",
+    formula: "KCl",
+    hardness: [2, 2],
+    specific_gravity: [1.99, 1.99],
+    colors: ["colorless", "white", "blue", "yellow", "red"],
+    streak: "white",
+    luster: "vitreous",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect cubic",
+    fracture: "uneven",
+    group: "Halide"
+  },
+  {
+    name: "Monazite",
+    formula: "(Ce,La,Nd,Th)PO₄",
+    hardness: [5, 5.5],
+    specific_gravity: [4.6, 5.4],
+    colors: ["brown", "yellow", "red", "green"],
+    streak: "white",
+    luster: "resinous to waxy",
+    crystal_system: "monoclinic",
+    transparency: "translucent to opaque",
+    cleavage: "poor",
+    fracture: "conchoidal to uneven",
+    group: "Phosphate"
+  },
+  {
+    name: "Turquoise",
+    formula: "CuAl₆(PO₄)₄(OH)₈·4H₂O",
+    hardness: [5, 6],
+    specific_gravity: [2.6, 2.8],
+    colors: ["blue", "blue-green", "green"],
+    streak: "white to pale green",
+    luster: "waxy to dull",
+    crystal_system: "triclinic",
+    transparency: "translucent to opaque",
+    cleavage: "good",
+    fracture: "conchoidal",
+    group: "Phosphate"
+  },
+  {
+    name: "Kernite",
+    formula: "Na₂B₄O₆(OH)₂·3H₂O",
+    hardness: [2.5, 3],
+    specific_gravity: [1.91, 1.91],
+    colors: ["colorless", "white"],
+    streak: "white",
+    luster: "vitreous to silky",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "splintery",
+    group: "Borate"
+  },
+  {
+    name: "Ulexite",
+    formula: "NaCaB₅O₆(OH)₆·5H₂O",
+    hardness: [2.5, 2.5],
+    specific_gravity: [1.96, 1.96],
+    colors: ["white", "colorless"],
+    streak: "white",
+    luster: "silky to vitreous",
+    crystal_system: "triclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Borate"
+  },
+  {
+    name: "Chrysocolla",
+    formula: "(Cu,Al)₂H₂Si₂O₅(OH)₄·nH₂O",
+    hardness: [2, 4],
+    specific_gravity: [2.0, 2.4],
+    colors: ["blue", "blue-green", "green"],
+    streak: "white to pale blue",
+    luster: "vitreous to greasy",
+    crystal_system: "orthorhombic",
+    transparency: "translucent to opaque",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Hydroxide"
+  },
+  
+  // Additional GROUP 4 minerals
+  {
+    name: "Ilmenite",
+    formula: "FeTiO₃",
+    hardness: [5, 6],
+    specific_gravity: [4.5, 5.0],
+    colors: ["black", "brown"],
+    streak: "black to brown",
+    luster: "metallic to dull",
+    crystal_system: "hexagonal",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "conchoidal",
+    group: "Oxide"
+  },
+  {
+    name: "Cuprite",
+    formula: "Cu₂O",
+    hardness: [3.5, 4],
+    specific_gravity: [5.85, 6.15],
+    colors: ["red", "dark red", "brown"],
+    streak: "brownish-red",
+    luster: "adamantine to earthy",
+    crystal_system: "cubic",
+    transparency: "translucent to opaque",
+    cleavage: "poor",
+    fracture: "conchoidal to uneven",
+    group: "Oxide"
+  },
+  {
+    name: "Cassiterite",
+    formula: "SnO₂",
+    hardness: [6, 7],
+    specific_gravity: [6.8, 7.1],
+    colors: ["brown", "black", "gray", "yellow"],
+    streak: "white to brownish",
+    luster: "adamantine to greasy",
+    crystal_system: "tetragonal",
+    transparency: "translucent to opaque",
+    cleavage: "good",
+    fracture: "subconchoidal to uneven",
+    group: "Oxide"
+  },
+  {
+    name: "Chromite",
+    formula: "FeCr₂O₄",
+    hardness: [5.5, 5.5],
+    specific_gravity: [4.5, 4.8],
+    colors: ["black", "brown"],
+    streak: "brown",
+    luster: "metallic to dull",
+    crystal_system: "cubic",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "uneven",
+    group: "Oxide"
+  },
+  {
+    name: "Pyrolusite",
+    formula: "MnO₂",
+    hardness: [2, 6.5],
+    specific_gravity: [4.4, 5.0],
+    colors: ["black", "dark gray"],
+    streak: "black",
+    luster: "metallic to dull",
+    crystal_system: "tetragonal",
+    transparency: "opaque",
+    cleavage: "perfect",
+    fracture: "splintery",
+    group: "Oxide"
+  },
+  {
+    name: "Bauxite",
+    formula: "Al(OH)₃",
+    hardness: [1, 3],
+    specific_gravity: [2.0, 2.5],
+    colors: ["white", "gray", "yellow", "brown", "red"],
+    streak: "white",
+    luster: "dull to earthy",
+    crystal_system: "amorphous",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "earthy",
+    group: "Hydroxide"
+  },
+  {
+    name: "Brucite",
+    formula: "Mg(OH)₂",
+    hardness: [2.5, 2.5],
+    specific_gravity: [2.39, 2.39],
+    colors: ["white", "gray", "blue", "green"],
+    streak: "white",
+    luster: "vitreous to pearly",
+    crystal_system: "hexagonal",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Hydroxide"
+  }
+]
+```
+
+## Search Filters
+
+```{ojs}
+viewof hardnessRange = Inputs.range([1, 10], {
+  label: "Hardness (Mohs scale)",
+  value: [1, 10],
+  step: 0.5
+})
+```
+
+```{ojs}
+viewof selectedColors = Inputs.checkbox(
+  ["colorless", "white", "black", "gray", "red", "blue", "green", "yellow", "purple", "brown", "pink", "orange"],
+  {
+    label: "Observed Colors (select any that match)",
+    value: []
+  }
+)
+```
+
+```{ojs}
+viewof selectedLuster = Inputs.select(
+  ["any", "metallic", "vitreous", "pearly", "dull"],
+  {
+    label: "Luster",
+    value: "any"
+  }
+)
+```
+
+```{ojs}
+viewof selectedStreak = Inputs.select(
+  ["any", "white", "black", "red", "greenish-black", "reddish-brown"],
+  {
+    label: "Streak Color",
+    value: "any"
+  }
+)
+```
+
+```{ojs}
+viewof specificGravityRange = Inputs.range([1, 8], {
+  label: "Specific Gravity",
+  value: [1, 8],
+  step: 0.1
+})
+```
+
+## Filtered Results
+
+```{ojs}
+filteredMinerals = minerals.filter(mineral => {
+  // Check hardness range
+  const hardnessMatch = mineral.hardness[1] >= hardnessRange[0] && mineral.hardness[0] <= hardnessRange[1];
+  
+  // Check specific gravity range
+  const sgMatch = mineral.specific_gravity[1] >= specificGravityRange[0] && mineral.specific_gravity[0] <= specificGravityRange[1];
+  
+  // Check color match (if any colors selected)
+  const colorMatch = selectedColors.length === 0 || 
+    selectedColors.some(color => mineral.colors.includes(color));
+  
+  // Check luster match
+  const lusterMatch = selectedLuster === "any" || mineral.luster.includes(selectedLuster);
+  
+  // Check streak match
+  const streakMatch = selectedStreak === "any" || mineral.streak.includes(selectedStreak);
+  
+  return hardnessMatch && sgMatch && colorMatch && lusterMatch && streakMatch;
+})
+```
+
+```{ojs}
+html`<div style="margin: 20px 0;">
+  <strong>Found ${filteredMinerals.length} matching mineral${filteredMinerals.length !== 1 ? 's' : ''}:</strong>
+</div>`
+```
+
+```{ojs}
+// Display results in a nice table format
+Inputs.table(filteredMinerals, {
+  columns: [
+    "name",
+    "formula", 
+    "hardness",
+    "specific_gravity",
+    "colors",
+    "streak",
+    "luster",
+    "crystal_system"
+  ],
+  header: {
+    name: "Mineral",
+    formula: "Formula",
+    hardness: "Hardness",
+    specific_gravity: "Specific Gravity",
+    colors: "Colors",
+    streak: "Streak",
+    luster: "Luster",
+    crystal_system: "Crystal System"
+  },
+  format: {
+    hardness: d => d[0] === d[1] ? d[0].toString() : `${d[0]} - ${d[1]}`,
+    specific_gravity: d => d[0] === d[1] ? d[0].toString() : `${d[0]} - ${d[1]}`,
+    colors: d => d.join(", ")
+  },
+  width: {
+    name: 120,
+    formula: 100,
+    colors: 200
+  }
+})
+```
+
+## Detailed Mineral Information
+
+Click on a mineral name below to see full details:
+
+```{ojs}
+viewof selectedMineral = Inputs.select(
+  ["Select a mineral..."].concat(filteredMinerals.map(m => m.name)),
+  {label: "View detailed properties:", value: "Select a mineral..."}
+)
+```
+
+```{ojs}
+{
+  if (selectedMineral !== "Select a mineral...") {
+    const mineral = minerals.find(m => m.name === selectedMineral);
+    return html`
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3>${mineral.name} - ${mineral.formula}</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+          <div><strong>Hardness:</strong> ${mineral.hardness[0] === mineral.hardness[1] ? mineral.hardness[0] : mineral.hardness[0] + " - " + mineral.hardness[1]}</div>
+          <div><strong>Specific Gravity:</strong> ${mineral.specific_gravity[0] === mineral.specific_gravity[1] ? mineral.specific_gravity[0] : mineral.specific_gravity[0] + " - " + mineral.specific_gravity[1]}</div>
+          <div><strong>Crystal System:</strong> ${mineral.crystal_system}</div>
+          <div><strong>Transparency:</strong> ${mineral.transparency}</div>
+          <div><strong>Luster:</strong> ${mineral.luster}</div>
+          <div><strong>Cleavage:</strong> ${mineral.cleavage}</div>
+          <div><strong>Streak:</strong> ${mineral.streak}</div>
+          <div><strong>Fracture:</strong> ${mineral.fracture}</div>
+        </div>
+        <div style="margin-top: 15px;">
+          <strong>Colors:</strong> ${mineral.colors.join(", ")}
+        </div>
+      </div>
+    `;
+  } else {
+    return html`<div style="color: #666; font-style: italic;">Select a mineral above to view detailed properties.</div>`;
+  }
+}
+```
+
+---
+
+## How to Use This Database
+
+1. **Start with what you observe**: Adjust the hardness range if you can test it, select colors you see, identify the luster type
+2. **Narrow down results**: Use streak color if you can perform a streak test
+3. **Compare candidates**: Look at the detailed properties of matching minerals
+4. **Cross-reference**: Check multiple properties to confirm your identification
+
+## Adding More Minerals
+
+To expand this database, add more mineral objects to the `minerals` array with the same property structure. You can also add new filter categories by creating additional input controls and updating the filtering logic.
