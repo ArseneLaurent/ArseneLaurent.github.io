@@ -1206,7 +1206,7 @@ viewof selectedLuster = Inputs.select(
 
 ```{ojs}
 viewof selectedStreak = Inputs.select(
-  ["any", "white", "black", "red", "greenish-black", "reddish-brown"],
+  ["any", "white", "black", "red", "brown", "yellow", "green", "blue", "gray"],
   {
     label: "Streak Color",
     value: "any"
@@ -1258,11 +1258,11 @@ filteredMinerals = minerals.filter(mineral => {
   const colorMatch = selectedColors.length === 0 || 
     selectedColors.some(color => mineral.colors.includes(color));
   
-  // Check luster match
-  const lusterMatch = selectedLuster === "any" || mineral.luster.includes(selectedLuster);
+  // Check luster match - more flexible matching
+  const lusterMatch = selectedLuster === "any" || mineral.luster.toLowerCase().includes(selectedLuster.toLowerCase());
   
-  // Check streak match
-  const streakMatch = selectedStreak === "any" || mineral.streak.includes(selectedStreak);
+  // Check streak match - more flexible matching
+  const streakMatch = selectedStreak === "any" || mineral.streak.toLowerCase().includes(selectedStreak.toLowerCase());
   
   return hardnessMatch && sgMatch && colorMatch && lusterMatch && streakMatch;
 })
