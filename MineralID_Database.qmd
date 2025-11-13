@@ -1171,11 +1171,17 @@ minerals = [
 ## Search Filters
 
 ```{ojs}
-viewof hardnessRange = Inputs.range([1, 10], {
-  label: "Hardness (Mohs scale)",
-  value: [1, 10],
+viewof hardnessMin = Inputs.range([1, 10], {
+  label: "Observed Hardness (Mohs scale) - will match ±1 point",
+  value: 5,
   step: 0.5
 })
+```
+
+```{ojs}
+html`<div style="margin: 10px 0; padding: 10px; background: #e8f4f8; border-radius: 5px;">
+  <small><strong>Note:</strong> Hardness matching includes ±1 point tolerance. For example, selecting hardness 6 will show minerals with hardness 5-7.</small>
+</div>`
 ```
 
 ```{ojs}
@@ -1209,22 +1215,44 @@ viewof selectedStreak = Inputs.select(
 ```
 
 ```{ojs}
+viewof useSpecificGravity = Inputs.checkbox(["Use Specific Gravity filter"], {
+  label: "Optional Filters",
+  value: []
+})
+```
+
+```{ojs}
 viewof specificGravityRange = Inputs.range([1, 8], {
-  label: "Specific Gravity",
+  label: "Specific Gravity Range",
   value: [1, 8],
-  step: 0.1
+  step: 0.1,
+  disabled: !useSpecificGravity.includes("Use Specific Gravity filter")
 })
 ```
 
 ## Filtered Results
 
 ```{ojs}
+// Debug: show what we're filtering for
+html`<div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 0.9em;">
+  <strong>Active Filters:</strong><br/>
+  Hardness: ${hardnessMin} (±1 = ${hardnessMin - 1} to ${hardnessMin + 1})<br/>
+  Colors: ${selectedColors.length === 0 ? 'Any' : selectedColors.join(', ')}<br/>
+  Luster: ${selectedLuster}<br/>
+  Streak: ${selectedStreak}<br/>
+  Specific Gravity: ${useSpecificGravity.includes("Use Specific Gravity filter") ? `${specificGravityRange[0]} - ${specificGravityRange[1]}` : 'Not used'}
+</div>`
+```
+
+```{ojs}
 filteredMinerals = minerals.filter(mineral => {
-  // Check hardness range
-  const hardnessMatch = mineral.hardness[1] >= hardnessRange[0] && mineral.hardness[0] <= hardnessRange[1];
+  // Check hardness with ±1 tolerance
+  const hardnessMatch = (mineral.hardness[0] <= hardnessMin + 1) && (mineral.hardness[1] >= hardnessMin - 1);
   
-  // Check specific gravity range
-  const sgMatch = mineral.specific_gravity[1] >= specificGravityRange[0] && mineral.specific_gravity[0] <= specificGravityRange[1];
+  // Check specific gravity range (only if enabled)
+  const sgEnabled = useSpecificGravity.includes("Use Specific Gravity filter");
+  const sgMatch = !sgEnabled || 
+    (mineral.specific_gravity[1] >= specificGravityRange[0] && mineral.specific_gravity[0] <= specificGravityRange[1]);
   
   // Check color match (if any colors selected)
   const colorMatch = selectedColors.length === 0 || 
@@ -1243,6 +1271,7 @@ filteredMinerals = minerals.filter(mineral => {
 ```{ojs}
 html`<div style="margin: 20px 0;">
   <strong>Found ${filteredMinerals.length} matching mineral${filteredMinerals.length !== 1 ? 's' : ''}:</strong>
+  ${filteredMinerals.length === 0 ? '<div style="color: #856404; background: #fff3cd; padding: 10px; margin-top: 10px; border-radius: 5px;">No minerals match your criteria. Try relaxing some filters (e.g., set luster and streak to "any", or deselect colors).</div>' : ''}
 </div>`
 ```
 
@@ -1320,4 +1349,16 @@ viewof selectedMineral = Inputs.select(
   }
 }
 ```
+
 ---
+
+## How to Use This Database
+
+1. **Start with what you observe**: Adjust the hardness range if you can test it, select colors you see, identify the luster type
+2. **Narrow down results**: Use streak color if you can perform a streak test
+3. **Compare candidates**: Look at the detailed properties of matching minerals
+4. **Cross-reference**: Check multiple properties to confirm your identification
+
+## Adding More Minerals
+
+To expand this database, add more mineral objects to the `minerals` array with the same property structure. You can also add new filter categories by creating additional input controls and updating the filtering logic.
