@@ -1221,38 +1221,38 @@ viewof useSpecificGravity = Inputs.checkbox(["Use Specific Gravity filter"], {
 })
 ```
 
-```{ojs}
-viewof specificGravityRange = Inputs.range([1, 8], {
-  label: "Specific Gravity Range",
-  value: [1, 8],
-  step: 0.1,
-  disabled: !useSpecificGravity.includes("Use Specific Gravity filter")
-})
-```
-
 ## Filtered Results
 
 ```{ojs}
-// Debug: show what we're filtering for
-html`<div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 0.9em;">
-  <strong>Active Filters:</strong><br/>
-  Hardness: ${hardnessMin} (±1 = ${hardnessMin - 1} to ${hardnessMin + 1})<br/>
-  Colors: ${selectedColors.length === 0 ? 'Any' : selectedColors.join(', ')}<br/>
-  Luster: ${selectedLuster}<br/>
-  Streak: ${selectedStreak}<br/>
-  Specific Gravity: ${useSpecificGravity.includes("Use Specific Gravity filter") ? `${specificGravityRange[0]} - ${specificGravityRange[1]}` : 'Not used'}
-</div>`
+// Debug: show what we're filtering for and test each condition
+debugInfo = {
+  const testMineral = minerals[0]; // Test with Quartz
+  const hardnessMatch = (testMineral.hardness[0] <= hardnessMin + 1) && (testMineral.hardness[1] >= hardnessMin - 1);
+  const colorMatch = selectedColors.length === 0 || selectedColors.some(color => testMineral.colors.includes(color));
+  const lusterMatch = selectedLuster === "any" || testMineral.luster.toLowerCase().includes(selectedLuster.toLowerCase());
+  const streakMatch = selectedStreak === "any" || testMineral.streak.toLowerCase().includes(selectedStreak.toLowerCase());
+  
+  return {
+    testMineral: testMineral.name,
+    hardnessMin: hardnessMin,
+    hardnessRange: `${hardnessMin - 1} to ${hardnessMin + 1}`,
+    selectedColors: selectedColors,
+    selectedLuster: selectedLuster,
+    selectedStreak: selectedStreak,
+    tests: {
+      hardness: hardnessMatch,
+      color: colorMatch,
+      luster: lusterMatch,
+      streak: streakMatch
+    }
+  };
+}
 ```
 
 ```{ojs}
 filteredMinerals = minerals.filter(mineral => {
   // Check hardness with ±1 tolerance
   const hardnessMatch = (mineral.hardness[0] <= hardnessMin + 1) && (mineral.hardness[1] >= hardnessMin - 1);
-  
-  // Check specific gravity range (only if enabled)
-  const sgEnabled = useSpecificGravity.includes("Use Specific Gravity filter");
-  const sgMatch = !sgEnabled || 
-    (mineral.specific_gravity[1] >= specificGravityRange[0] && mineral.specific_gravity[0] <= specificGravityRange[1]);
   
   // Check color match (if any colors selected)
   const colorMatch = selectedColors.length === 0 || 
@@ -1264,7 +1264,7 @@ filteredMinerals = minerals.filter(mineral => {
   // Check streak match - more flexible matching
   const streakMatch = selectedStreak === "any" || mineral.streak.toLowerCase().includes(selectedStreak.toLowerCase());
   
-  return hardnessMatch && sgMatch && colorMatch && lusterMatch && streakMatch;
+  return hardnessMatch && colorMatch && lusterMatch && streakMatch;
 })
 ```
 
