@@ -5,7 +5,7 @@ format:
   html:
     theme: cosmo
     toc: true
-    code-fold: true
+    echo: false
     embed-resources: true
 ---
 
@@ -1164,6 +1164,245 @@ minerals = [
     cleavage: "perfect",
     fracture: "uneven",
     group: "Hydroxide"
+  },
+    // GROUP 5: SULFIDES & NATIVE ELEMENTS
+  {
+    name: "Galena",
+    formula: "PbS",
+    hardness: [2.5, 2.5],
+    specific_gravity: [7.4, 7.6],
+    colors: ["lead gray", "silver-gray"],
+    streak: "lead gray",
+    luster: "metallic",
+    crystal_system: "cubic",
+    transparency: "opaque",
+    cleavage: "perfect cubic",
+    fracture: "subconchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Pyrite",
+    formula: "FeS₂",
+    hardness: [6, 6.5],
+    specific_gravity: [4.95, 5.10],
+    colors: ["brass yellow", "golden yellow"],
+    streak: "greenish-black to brownish-black",
+    luster: "metallic",
+    crystal_system: "cubic",
+    transparency: "opaque",
+    cleavage: "poor",
+    fracture: "uneven to conchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Chalcopyrite",
+    formula: "CuFeS₂",
+    hardness: [3.5, 4],
+    specific_gravity: [4.1, 4.3],
+    colors: ["brass yellow", "golden yellow"],
+    streak: "greenish-black",
+    luster: "metallic",
+    crystal_system: "tetragonal",
+    transparency: "opaque",
+    cleavage: "poor",
+    fracture: "uneven",
+    group: "Sulfide"
+  },
+  {
+    name: "Sphalerite",
+    formula: "ZnS",
+    hardness: [3.5, 4],
+    specific_gravity: [3.9, 4.1],
+    colors: ["brown", "yellow", "red", "green", "black"],
+    streak: "white to yellow to brown",
+    luster: "resinous to adamantine",
+    crystal_system: "cubic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "conchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Bornite",
+    formula: "Cu₅FeS₄",
+    hardness: [3, 3],
+    specific_gravity: [4.9, 5.3],
+    colors: ["bronze-brown", "purple", "blue tarnish"],
+    streak: "grayish-black",
+    luster: "metallic",
+    crystal_system: "orthorhombic",
+    transparency: "opaque",
+    cleavage: "poor",
+    fracture: "uneven to conchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Cinnabar",
+    formula: "HgS",
+    hardness: [2, 2.5],
+    specific_gravity: [8.0, 8.2],
+    colors: ["red", "scarlet"],
+    streak: "scarlet",
+    luster: "adamantine to dull",
+    crystal_system: "hexagonal",
+    transparency: "transparent to opaque",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Sulfide"
+  },
+  {
+    name: "Chalcocite",
+    formula: "Cu₂S",
+    hardness: [2.5, 3],
+    specific_gravity: [5.5, 5.8],
+    colors: ["dark gray", "black"],
+    streak: "grayish-black",
+    luster: "metallic",
+    crystal_system: "orthorhombic",
+    transparency: "opaque",
+    cleavage: "poor",
+    fracture: "conchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Pyrrhotite",
+    formula: "Fe₁₋ₓS",
+    hardness: [3.5, 4.5],
+    specific_gravity: [4.58, 4.65],
+    colors: ["bronze-brown", "bronze-yellow"],
+    streak: "grayish-black",
+    luster: "metallic",
+    crystal_system: "monoclinic",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "uneven to subconchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Realgar",
+    formula: "AsS",
+    hardness: [1.5, 2],
+    specific_gravity: [3.5, 3.6],
+    colors: ["red", "orange-red"],
+    streak: "orange-red",
+    luster: "resinous to greasy",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "good",
+    fracture: "conchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Orpiment",
+    formula: "As₂S₃",
+    hardness: [1.5, 2],
+    specific_gravity: [3.4, 3.5],
+    colors: ["lemon yellow", "golden yellow"],
+    streak: "pale yellow",
+    luster: "resinous to pearly",
+    crystal_system: "monoclinic",
+    transparency: "transparent to translucent",
+    cleavage: "perfect",
+    fracture: "uneven",
+    group: "Sulfide"
+  },
+  {
+    name: "Arsenopyrite",
+    formula: "FeAsS",
+    hardness: [5.5, 6],
+    specific_gravity: [6.0, 6.2],
+    colors: ["silver-white", "steel-gray"],
+    streak: "black",
+    luster: "metallic",
+    crystal_system: "monoclinic",
+    transparency: "opaque",
+    cleavage: "poor",
+    fracture: "uneven",
+    group: "Sulfide"
+  },
+  {
+    name: "Stibnite",
+    formula: "Sb₂S₃",
+    hardness: [2, 2],
+    specific_gravity: [4.5, 4.6],
+    colors: ["lead gray", "steel-gray"],
+    streak: "lead gray",
+    luster: "metallic",
+    crystal_system: "orthorhombic",
+    transparency: "opaque",
+    cleavage: "perfect",
+    fracture: "subconchoidal",
+    group: "Sulfide"
+  },
+  {
+    name: "Molybdenite",
+    formula: "MoS₂",
+    hardness: [1, 1.5],
+    specific_gravity: [4.6, 4.7],
+    colors: ["lead gray", "bluish-gray"],
+    streak: "greenish-gray",
+    luster: "metallic",
+    crystal_system: "hexagonal",
+    transparency: "opaque",
+    cleavage: "perfect basal",
+    fracture: "uneven",
+    group: "Sulfide"
+  },
+  {
+    name: "Marcasite",
+    formula: "FeS₂",
+    hardness: [6, 6.5],
+    specific_gravity: [4.85, 4.92],
+    colors: ["brass yellow", "pale yellow"],
+    streak: "grayish-black",
+    luster: "metallic",
+    crystal_system: "orthorhombic",
+    transparency: "opaque",
+    cleavage: "poor",
+    fracture: "uneven",
+    group: "Sulfide"
+  },
+  {
+    name: "Graphite",
+    formula: "C",
+    hardness: [1, 2],
+    specific_gravity: [2.09, 2.23],
+    colors: ["black", "dark gray"],
+    streak: "black",
+    luster: "metallic to dull",
+    crystal_system: "hexagonal",
+    transparency: "opaque",
+    cleavage: "perfect basal",
+    fracture: "uneven",
+    group: "Native Element"
+  },
+  {
+    name: "Copper",
+    formula: "Cu",
+    hardness: [2.5, 3],
+    specific_gravity: [8.9, 8.9],
+    colors: ["copper-red", "brown tarnish"],
+    streak: "copper-red",
+    luster: "metallic",
+    crystal_system: "cubic",
+    transparency: "opaque",
+    cleavage: "none",
+    fracture: "hackly",
+    group: "Native Element"
+  },
+  {
+    name: "Sulfur",
+    formula: "S",
+    hardness: [1.5, 2.5],
+    specific_gravity: [2.05, 2.09],
+    colors: ["yellow", "yellow-brown"],
+    streak: "white",
+    luster: "resinous to greasy",
+    crystal_system: "orthorhombic",
+    transparency: "transparent to translucent",
+    cleavage: "poor",
+    fracture: "uneven to conchoidal",
+    group: "Native Element"
   }
 ]
 ```
@@ -1172,15 +1411,26 @@ minerals = [
 
 ```{ojs}
 viewof hardnessMin = Inputs.range([1, 10], {
-  label: "Observed Hardness (Mohs scale) - will match ±1 point",
+  label: "Observed Hardness (Mohs scale)",
   value: 5,
   step: 0.5
 })
 ```
 
 ```{ojs}
+viewof hardnessTolerance = Inputs.select(
+  [0.5, 1.0, 1.5],
+  {
+    label: "Hardness tolerance (±)",
+    value: 0.5,
+    format: x => `±${x} ${x === 0.5 ? '(precise)' : x === 1.0 ? '(moderate)' : '(generous)'}`
+  }
+)
+```
+
+```{ojs}
 html`<div style="margin: 10px 0; padding: 10px; background: #e8f4f8; border-radius: 5px;">
-  <small><strong>Note:</strong> Hardness matching includes ±1 point tolerance. For example, selecting hardness 6 will show minerals with hardness 5-7.</small>
+  <small><strong>Note:</strong> Hardness matching uses the selected tolerance. For example, hardness 6 with ±0.5 will show minerals with hardness 5.5-6.5. Use larger tolerances if you're uncertain about your hardness measurement.</small>
 </div>`
 ```
 
@@ -1196,7 +1446,7 @@ viewof selectedColors = Inputs.checkbox(
 
 ```{ojs}
 viewof selectedLuster = Inputs.select(
-  ["any", "metallic", "vitreous", "pearly", "dull"],
+  ["any", "metallic", "vitreous", "pearly", "dull", "greasy", "silky", "resinous", "adamantine", "waxy", "earthy"],
   {
     label: "Luster",
     value: "any"
@@ -1215,44 +1465,92 @@ viewof selectedStreak = Inputs.select(
 ```
 
 ```{ojs}
-viewof useSpecificGravity = Inputs.checkbox(["Use Specific Gravity filter"], {
-  label: "Optional Filters",
-  value: []
-})
+viewof selectedCleavage = Inputs.select(
+  ["any", "perfect", "good", "poor", "none"],
+  {
+    label: "Cleavage Quality",
+    value: "any"
+  }
+)
 ```
+
+```{ojs}
+viewof selectedFracture = Inputs.select(
+  ["any", "conchoidal", "uneven", "splintery", "hackly", "earthy", "subconchoidal", "fibrous"],
+  {
+    label: "Fracture Type",
+    value: "any"
+  }
+)
+```
+
+```{ojs}
+viewof selectedCrystalSystem = Inputs.select(
+  ["any", "cubic", "hexagonal", "tetragonal", "orthorhombic", "monoclinic", "triclinic", "amorphous"],
+  {
+    label: "Crystal System",
+    value: "any"
+  }
+)
+```
+
+```{ojs}
+viewof selectedGroup = Inputs.select(
+  ["any", "Framework Silicate", "Sheet Silicate", "Chain Silicate", "Ring Silicate", "Island Silicate", "Disilicate", "Carbonate", "Sulfate", "Halide", "Phosphate", "Borate", "Hydroxide", "Oxide", "Sulfide", "Native Element"],
+  {
+    label: "Mineral Group",
+    value: "any"
+  }
+)
+```
+
+```{ojs}
+viewof resetTrigger = Inputs.button("Reset All Filters")
+```
+
+```{ojs}
+// Reset effect - triggered when button is clicked
+resetEffect = {
+  resetTrigger; // This line makes the cell reactive to button clicks
+  viewof hardnessMin.value = 5;
+  viewof hardnessMin.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof hardnessTolerance.value = 0.5;
+  viewof hardnessTolerance.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof selectedColors.value = [];
+  viewof selectedColors.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof selectedLuster.value = "any";
+  viewof selectedLuster.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof selectedStreak.value = "any";
+  viewof selectedStreak.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof selectedCleavage.value = "any";
+  viewof selectedCleavage.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof selectedFracture.value = "any";
+  viewof selectedFracture.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof selectedCrystalSystem.value = "any";
+  viewof selectedCrystalSystem.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  viewof selectedGroup.value = "any";
+  viewof selectedGroup.dispatchEvent(new Event("input", {bubbles: true}));
+  
+  return "Filters reset!";
+}
+```
+
 
 ## Filtered Results
 
 ```{ojs}
-// Debug: show what we're filtering for and test each condition
-debugInfo = {
-  const testMineral = minerals[0]; // Test with Quartz
-  const hardnessMatch = (testMineral.hardness[0] <= hardnessMin + 1) && (testMineral.hardness[1] >= hardnessMin - 1);
-  const colorMatch = selectedColors.length === 0 || selectedColors.some(color => testMineral.colors.includes(color));
-  const lusterMatch = selectedLuster === "any" || testMineral.luster.toLowerCase().includes(selectedLuster.toLowerCase());
-  const streakMatch = selectedStreak === "any" || testMineral.streak.toLowerCase().includes(selectedStreak.toLowerCase());
-  
-  return {
-    testMineral: testMineral.name,
-    hardnessMin: hardnessMin,
-    hardnessRange: `${hardnessMin - 1} to ${hardnessMin + 1}`,
-    selectedColors: selectedColors,
-    selectedLuster: selectedLuster,
-    selectedStreak: selectedStreak,
-    tests: {
-      hardness: hardnessMatch,
-      color: colorMatch,
-      luster: lusterMatch,
-      streak: streakMatch
-    }
-  };
-}
-```
-
-```{ojs}
 filteredMinerals = minerals.filter(mineral => {
-  // Check hardness with ±1 tolerance
-  const hardnessMatch = (mineral.hardness[0] <= hardnessMin + 1) && (mineral.hardness[1] >= hardnessMin - 1);
+  // Check hardness with user-selected tolerance
+  const hardnessMatch = (mineral.hardness[0] <= hardnessMin + hardnessTolerance) && 
+                        (mineral.hardness[1] >= hardnessMin - hardnessTolerance);
   
   // Check color match (if any colors selected)
   const colorMatch = selectedColors.length === 0 || 
@@ -1264,20 +1562,74 @@ filteredMinerals = minerals.filter(mineral => {
   // Check streak match - more flexible matching
   const streakMatch = selectedStreak === "any" || mineral.streak.toLowerCase().includes(selectedStreak.toLowerCase());
   
-  return hardnessMatch && colorMatch && lusterMatch && streakMatch;
+  // Check cleavage match - more flexible matching
+  const cleavageMatch = selectedCleavage === "any" || mineral.cleavage.toLowerCase().includes(selectedCleavage.toLowerCase());
+  
+  // Check fracture match - more flexible matching
+  const fractureMatch = selectedFracture === "any" || mineral.fracture.toLowerCase().includes(selectedFracture.toLowerCase());
+  
+  // Check crystal system match
+  const crystalSystemMatch = selectedCrystalSystem === "any" || mineral.crystal_system.toLowerCase() === selectedCrystalSystem.toLowerCase();
+  
+  // Check group match
+  const groupMatch = selectedGroup === "any" || mineral.group === selectedGroup;
+  
+  return hardnessMatch && colorMatch && lusterMatch && streakMatch && cleavageMatch && fractureMatch && crystalSystemMatch && groupMatch;
 })
 ```
 
 ```{ojs}
+// Count active filters
+activeFilterCount = {
+  let count = 0;
+  if (hardnessTolerance !== 0.5) count++; // Non-default tolerance
+  if (selectedColors.length > 0) count++;
+  if (selectedLuster !== "any") count++;
+  if (selectedStreak !== "any") count++;
+  if (selectedCleavage !== "any") count++;
+  if (selectedFracture !== "any") count++;
+  if (selectedCrystalSystem !== "any") count++;
+  if (selectedGroup !== "any") count++;
+  return count;
+}
+```
+
+```{ojs}
 html`<div style="margin: 20px 0;">
-  <strong>Found ${filteredMinerals.length} matching mineral${filteredMinerals.length !== 1 ? 's' : ''}:</strong>
-  ${filteredMinerals.length === 0 ? '<div style="color: #856404; background: #fff3cd; padding: 10px; margin-top: 10px; border-radius: 5px;">No minerals match your criteria. Try relaxing some filters (e.g., set luster and streak to "any", or deselect colors).</div>' : ''}
+  <strong>Found ${filteredMinerals.length} matching mineral${filteredMinerals.length !== 1 ? 's' : ''}</strong>
+  ${activeFilterCount > 0 ? ` <span style="color: #666; font-size: 0.9em;">(${activeFilterCount} filter${activeFilterCount !== 1 ? 's' : ''} active)</span>` : ''}
+  ${filteredMinerals.length === 0 ? '<div style="color: #856404; background: #fff3cd; padding: 10px; margin-top: 10px; border-radius: 5px;">No minerals match your criteria. Try clicking "Reset All Filters" or setting some filters to "any".</div>' : ''}
 </div>`
 ```
 
 ```{ojs}
+viewof sortColumn = Inputs.select(
+  ["name", "hardness", "group"],
+  {
+    label: "Sort by:",
+    value: "name"
+  }
+)
+```
+
+```{ojs}
+// Sort filtered minerals based on selected column
+sortedMinerals = {
+  const sorted = [...filteredMinerals];
+  if (sortColumn === "name") {
+    sorted.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortColumn === "hardness") {
+    sorted.sort((a, b) => a.hardness[0] - b.hardness[0]);
+  } else if (sortColumn === "group") {
+    sorted.sort((a, b) => a.group.localeCompare(b.group));
+  }
+  return sorted;
+}
+```
+
+```{ojs}
 // Display results in a nice table format
-Inputs.table(filteredMinerals, {
+Inputs.table(sortedMinerals, {
   columns: [
     "name",
     "formula", 
@@ -1286,7 +1638,8 @@ Inputs.table(filteredMinerals, {
     "colors",
     "streak",
     "luster",
-    "crystal_system"
+    "crystal_system",
+    "group"
   ],
   header: {
     name: "Mineral",
@@ -1296,7 +1649,8 @@ Inputs.table(filteredMinerals, {
     colors: "Colors",
     streak: "Streak",
     luster: "Luster",
-    crystal_system: "Crystal System"
+    crystal_system: "Crystal System",
+    group: "Group"
   },
   format: {
     hardness: d => d[0] === d[1] ? d[0].toString() : `${d[0]} - ${d[1]}`,
@@ -1306,7 +1660,8 @@ Inputs.table(filteredMinerals, {
   width: {
     name: 120,
     formula: 100,
-    colors: 200
+    colors: 200,
+    group: 150
   }
 })
 ```
@@ -1354,11 +1709,16 @@ viewof selectedMineral = Inputs.select(
 
 ## How to Use This Database
 
-1. **Start with what you observe**: Adjust the hardness range if you can test it, select colors you see, identify the luster type
-2. **Narrow down results**: Use streak color if you can perform a streak test
-3. **Compare candidates**: Look at the detailed properties of matching minerals
-4. **Cross-reference**: Check multiple properties to confirm your identification
+1. **Start with what you observe**: Adjust the hardness slider based on scratch tests, select colors you see, identify the luster type
+2. **Add structural properties**: If visible, note cleavage quality, fracture type, and crystal form
+3. **Narrow down results**: Use streak color if you can perform a streak test
+4. **Compare candidates**: Look at the detailed properties of matching minerals
+5. **Cross-reference**: Check multiple properties to confirm your identification
 
+**Tips:**
+- Start with fewer filters and add more to narrow results
+- Cleavage and crystal system are very diagnostic when visible
+- Use "any" for properties you can't observe clearly
 ## Adding More Minerals
 
 To expand this database, add more mineral objects to the `minerals` array with the same property structure. You can also add new filter categories by creating additional input controls and updating the filtering logic.
